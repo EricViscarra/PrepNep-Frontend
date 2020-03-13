@@ -1,0 +1,36 @@
+#Boxholder{
+    text-align:center;
+}
+.Limitholder{
+    outline-style: solid;
+    height: 300px;
+    width: 200px;
+    display: inline-block;
+    justify-content: center;
+    display:flex-end;
+    align-items: center;
+    position: relative;
+    padding: 15px;
+    margin: 5px;
+}
+.Limiters{
+    display:flex;
+    outline-style:solid;
+    height: 250px;
+    width:200px;
+}
+.Button-holder{
+    font-size: 1.5em;
+    margin:0px 0px 0px 120px;
+}
+.LimiterButton{
+    padding: 5px 10px;
+}
+.divider{
+    width: 5px;
+    height:auto;
+    display:inline-block;
+}
+#Boxholder{
+    height: 400px;
+}
