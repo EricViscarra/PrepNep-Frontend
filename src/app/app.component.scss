@@ -96,3 +96,22 @@ div.scrollmenu {
     display: flex;
     justify-content: center;
   }
+
+  .container, .container2, #physics{
+    //width: 200px;
+    //clear: both;
+    display: inline-block;
+  }
+  .domainspacer{
+    width: 10px;
+    display: inline-block;
+  }
+  
+  /*.container input, .container2 input {
+    //width: 100%;
+    //clear: both;
+  }*/
+  
+  #DomainPhysics{
+    text-align: center;
+  }
