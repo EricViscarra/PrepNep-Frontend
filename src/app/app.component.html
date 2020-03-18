@@ -1,117 +1,119 @@
-<div id = "Boxholder">
-  <div class = "Limitholder">
-    <p class = "LimitedText">Level Sets</p>
-    <div class = "Limiters" id = "Level-set">
-      <mat-radio-group
-      aria-labelledby="example-radio-group-label"
-      class="example-radio-group"
-      [(ngModel)]="pickedLevelSet">
-        <mat-radio-button class="example-radio-button" *ngFor="let levelSet of levelSets" [value]="levelSet">
-          {{levelSet}} 
-        </mat-radio-button>
-    </mat-radio-group>
-    </div>
-    <div class = "Button-holder">
-      <button class = "LimiterButton" mat-raised-button color="accent" (click)="openDialog()">+</button>
-      <button class = "LimiterButton" mat-raised-button color="accent" (click)="openDialog()">-</button>
-    </div>
-  </div>
-  <div class = "Limitholder">
-    <p class = "LimitedText">Variable Sets</p>
-    <div class = "Limiters" id = "Variable-set">
-      <mat-radio-group
-      aria-labelledby="example-radio-group-label"
-      class="example-radio-group"
-      [(ngModel)]="pickedVarSet">
-        <mat-radio-button class="example-radio-button" *ngFor="let varSet of varSets" [value]="varSet">
-          {{varSet}} 
-        </mat-radio-button>
+<div>
+  <div id = "Boxholder">
+    <div class = "Limitholder">
+      <p class = "LimitedText">Level Sets</p>
+      <div class = "Limiters" id = "Level-set">
+        <mat-radio-group
+        aria-labelledby="example-radio-group-label"
+        class="example-radio-group"
+        [(ngModel)]="pickedLevelSet">
+          <mat-radio-button class="example-radio-button" *ngFor="let levelSet of levelSets" [value]="levelSet">
+            {{levelSet}} 
+          </mat-radio-button>
       </mat-radio-group>
+      </div>
+      <div class = "Button-holder">
+        <button class = "LimiterButton" mat-raised-button color="accent" (click)="openDialog()">+</button>
+        <button class = "LimiterButton" mat-raised-button color="accent" (click)="openDialog()">-</button>
+      </div>
     </div>
-    <div class = "Button-holder">
-      <button class = "LimiterButton" mat-raised-button color="accent" (click)="openDialog()">+</button>
-      <button class = "LimiterButton" mat-raised-button color="accent" (click)="openDialog()">-</button>
+    <div class = "Limitholder">
+      <p class = "LimitedText">Variable Sets</p>
+      <div class = "Limiters" id = "Variable-set">
+        <mat-radio-group
+        aria-labelledby="example-radio-group-label"
+        class="example-radio-group"
+        [(ngModel)]="pickedVarSet">
+          <mat-radio-button class="example-radio-button" *ngFor="let varSet of varSets" [value]="varSet">
+            {{varSet}} 
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div class = "Button-holder">
+        <button class = "LimiterButton" mat-raised-button color="accent" (click)="openDialog()">+</button>
+        <button class = "LimiterButton" mat-raised-button color="accent" (click)="openDialog()">-</button>
+      </div>
+    </div>
+    <div class = "Limitholder">
+      <p class = "LimitedText">Output Grid</p>
+      <div class = "Limiters" id = "Output-grid">
+        <mat-radio-group
+        aria-labelledby="example-radio-group-label"
+        class="example-radio-group"
+        [(ngModel)]="pickedGridSet">
+          <mat-radio-button class="example-radio-button" *ngFor="let gridSet of gridSets" [value]="gridSet">
+            {{gridSet}} 
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div class = "Button-holder">
+        <button class = "LimiterButton" mat-raised-button color="accent" (click)="openDialog()">+</button>
+        <button class = "LimiterButton" mat-raised-button color="accent" (click)="openDialog()">-</button>
+      </div>
+    </div>
+    <div class = "Limitholder">
+      <p class = "LimitedText">Time Sets</p>
+      <div class = "Limiters" id = "Time-set">
+        <mat-radio-group
+        aria-labelledby="example-radio-group-label"
+        class="example-radio-group"
+        [(ngModel)]="pickedTimeSet">
+          <mat-radio-button class="example-radio-button" *ngFor="let timeSet of timeSets" [value]="timeSet">
+            {{timeSet}} 
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div class = "Button-holder">
+        <button class = "LimiterButton" mat-raised-button color="accent" (click)="openDialog()">+</button>
+        <button class = "LimiterButton" mat-raised-button color="accent" (click)="openDialog()">-</button>
+      </div>
     </div>
   </div>
-  <div class = "Limitholder">
-    <p class = "LimitedText">Output Grid</p>
-    <div class = "Limiters" id = "Output-grid">
-      <mat-radio-group
-      aria-labelledby="example-radio-group-label"
-      class="example-radio-group"
-      [(ngModel)]="pickedGridSet">
-        <mat-radio-button class="example-radio-button" *ngFor="let gridSet of gridSets" [value]="gridSet">
-          {{gridSet}} 
-        </mat-radio-button>
-      </mat-radio-group>
-    </div>
-    <div class = "Button-holder">
-      <button class = "LimiterButton" mat-raised-button color="accent" (click)="openDialog()">+</button>
-      <button class = "LimiterButton" mat-raised-button color="accent" (click)="openDialog()">-</button>
-    </div>
+
+  <div id="btn_wrapper">
+    <button mat-raised-button color="primary" (click)="addOutputSet(pickedLevelSet, pickedVarSet, pickedGridSet, pickedTimeSet)">Create Output Set</button>
   </div>
-  <div class = "Limitholder">
-    <p class = "LimitedText">Time Sets</p>
-    <div class = "Limiters" id = "Time-set">
-      <mat-radio-group
-      aria-labelledby="example-radio-group-label"
-      class="example-radio-group"
-      [(ngModel)]="pickedTimeSet">
-        <mat-radio-button class="example-radio-button" *ngFor="let timeSet of timeSets" [value]="timeSet">
-          {{timeSet}} 
-        </mat-radio-button>
-      </mat-radio-group>
+
+  <br/>
+  <br/>
+
+  <div id="scroll_wrapper">
+    <div class="scrollmenu">
+      <table *ngIf="outputSets.length > 0; else noOutputSets">
+        <tr>
+          <th> </th>
+          <td *ngFor="let outputSet of outputSets; let i = index">
+            {{i + 1}}
+          </td>
+        </tr>
+        <tr>
+          <td>Level</td>
+          <td *ngFor="let outputSet of outputSets">
+            {{outputSet[0]}}
+          </td>
+        </tr>
+        <tr>
+          <td>Var</td>
+          <td *ngFor="let outputSet of outputSets">
+            {{outputSet[1]}}
+          </td>
+        </tr>
+        <tr>
+          <td>Grid</td>
+          <td *ngFor="let outputSet of outputSets">
+            {{outputSet[2]}}
+          </td>
+        </tr>
+        <tr>
+          <td>Time</td>
+          <td *ngFor="let outputSet of outputSets">
+            {{outputSet[3]}}
+          </td>
+        </tr>
+      </table>
+      <ng-template #noOutputSets> 
+        <h1> No output sets have been made yet! </h1> 
+      </ng-template>
     </div>
-    <div class = "Button-holder">
-      <button class = "LimiterButton" mat-raised-button color="accent" (click)="openDialog()">+</button>
-      <button class = "LimiterButton" mat-raised-button color="accent" (click)="openDialog()">-</button>
-    </div>
-  </div>
-</div>
-
-<div id="btn_wrapper">
-  <button mat-raised-button color="primary" (click)="addOutputSet(pickedLevelSet, pickedVarSet, pickedGridSet, pickedTimeSet)">Create Output Set</button>
-</div>
-
-<br/>
-<br/>
-
-<div id="scroll_wrapper">
-  <div class="scrollmenu">
-    <table *ngIf="outputSets.length > 0; else noOutputSets">
-      <tr>
-        <th> </th>
-        <td *ngFor="let outputSet of outputSets; let i = index">
-          {{i + 1}}
-        </td>
-      </tr>
-      <tr>
-        <td>Level</td>
-        <td *ngFor="let outputSet of outputSets">
-          {{outputSet[0]}}
-        </td>
-      </tr>
-      <tr>
-        <td>Var</td>
-        <td *ngFor="let outputSet of outputSets">
-          {{outputSet[1]}}
-        </td>
-      </tr>
-      <tr>
-        <td>Grid</td>
-        <td *ngFor="let outputSet of outputSets">
-          {{outputSet[2]}}
-        </td>
-      </tr>
-      <tr>
-        <td>Time</td>
-        <td *ngFor="let outputSet of outputSets">
-          {{outputSet[3]}}
-        </td>
-      </tr>
-    </table>
-    <ng-template #noOutputSets> 
-      <h1> No output sets have been made yet! </h1> 
-    </ng-template>
   </div>
 </div>
