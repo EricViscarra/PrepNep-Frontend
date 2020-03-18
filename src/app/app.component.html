@@ -31,51 +31,70 @@ table, th, td {
   border-collapse: collapse;
 }
 
+table {
+  width: 100%;
+}
+
+span {
+  font-weight: bold;
+  background: lightgray;
+  padding: .3em .8em;
+  cursor: pointer;
+}
+
+h1 {
+  color: white;
+}
+
 </style>
 </head>
 <body>
+  <button mat-button (click)="addOutputSet()"> Create Output Set</button>
+  <br/>
+  <br/>
+  <button mat-button>Click me now!</button>
 
-<div class="scrollmenu">
-  <table>
-    <tr>
-      <th>1</th>
-      <th>2</th>
-      <th>3</th>
-      <th>4</th>
-      <th>5</th>
-      <th>6</th>
-      <th>7</th>
-    </tr>
-    <tr>
-      <td>Mandatory raob</td>
-      <td>Mandatory raob</td>
-      <td>Mandatory raob</td>
-      <td>Mandatory raob</td>
-      <td>Mandatory raob</td>
-      <td>Mandatory raob</td>
-      <td>Mandatory raob</td>
-    </tr>
-    <tr>
-      <td>sonde vars</td>
-      <td>sonde vars</td>
-      <td>sonde vars</td>
-      <td>sonde vars</td>
-      <td>sonde vars</td>
-      <td>sonde vars</td>
-      <td>sonde vars</td>
-    </tr>
-    <tr>
-      <td>1 x 1 regular</td>
-      <td>.5 x .5 regular</td>
-      <td>1 x 1 regular</td>
-      <td>.5 x .5 regular</td>
-      <td>1 x 1 regular</td>
-      <td>.5 x .5 regular</td>
-      <td>1 x 1 regular</td>
-    </tr>
+  <input type="radio"> Decision One
 
-  </table>
-</div>
+  <br/>
+  <br/>
 
+  <div class="scrollmenu">
+    <table *ngIf="outputSets.length > 0; else noOutputSets">
+      <tr>
+        <th> </th>
+        <td *ngFor="let outputSet of outputSets; let i = index">
+          {{i + 1}}
+        </td>
+      </tr>
+      <tr>
+        <td>Level</td>
+        <td *ngFor="let outputSet of outputSets">
+          {{outputSet[0]}}
+        </td>
+      </tr>
+      <tr>
+        <td>Var</td>
+        <td *ngFor="let outputSet of outputSets">
+          {{outputSet[1]}}
+        </td>
+      </tr>
+      <tr>
+        <td>Grid</td>
+        <td *ngFor="let outputSet of outputSets">
+          {{outputSet[2]}}
+        </td>
+      </tr>
+      <tr>
+        <td>Time</td>
+        <td *ngFor="let outputSet of outputSets">
+          {{outputSet[3]}}
+        </td>
+      </tr>
+    </table>
+    <ng-template #noOutputSets> 
+      <h1> No output sets have been made yet! </h1> 
+    </ng-template>
+  </div>
 </body>
 </html>
