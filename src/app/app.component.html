@@ -46,16 +46,69 @@ h1 {
   color: white;
 }
 
+.example-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+.example-radio-button {
+  margin: 5px;
+}
+
 </style>
 </head>
 <body>
-  <button mat-button (click)="addOutputSet()"> Create Output Set</button>
+
+  <div>
+    <mat-radio-group
+    aria-labelledby="example-radio-group-label"
+    class="example-radio-group"
+    [(ngModel)]="pickedLevelSet">
+      <mat-radio-button class="example-radio-button" *ngFor="let levelSet of levelSets" [value]="levelSet">
+      {{levelSet}} 
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div>
+    <mat-radio-group
+    aria-labelledby="example-radio-group-label"
+    class="example-radio-group"
+    [(ngModel)]="pickedVarSet">
+      <mat-radio-button class="example-radio-button" *ngFor="let varSet of varSets" [value]="varSet">
+      {{varSet}} 
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div>
+    <mat-radio-group
+    aria-labelledby="example-radio-group-label"
+    class="example-radio-group"
+    [(ngModel)]="pickedGridSet">
+      <mat-radio-button class="example-radio-button" *ngFor="let gridSet of gridSets" [value]="gridSet">
+      {{gridSet}} 
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div>
+    <mat-radio-group
+    aria-labelledby="example-radio-group-label"
+    class="example-radio-group"
+    [(ngModel)]="pickedTimeSet">
+      <mat-radio-button class="example-radio-button" *ngFor="let timeSet of timeSets" [value]="timeSet">
+      {{timeSet}} 
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+
   <br/>
   <br/>
-  <button mat-button>Click me now!</button>
 
-  <input type="radio"> Decision One
-
+  <button mat-raised-button color="primary" (click)="addOutputSet(pickedLevelSet, pickedVarSet, pickedGridSet, pickedTimeSet)">Create Output Set</button>
+  
   <br/>
   <br/>
 

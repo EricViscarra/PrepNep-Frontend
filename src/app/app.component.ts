@@ -9,9 +9,15 @@ export class AppComponent implements OnInit {
 
   title = 'PrepNep-Frontend';
 
-  outputSets : String[][] = [
-    //["Level set 1", "Var set 1", "Grid set 1", "Time set 1"]
-  ];
+  pickedLevelSet : string;
+  pickedVarSet : string;
+  pickedGridSet : string;
+  pickedTimeSet : string;
+  levelSets : String[] = ["Level Set 1", "Level Set 2", "Level Set 3"];
+  varSets : String[] = ["Var Set 1", "Var Set 2", "Var Set 3"];
+  gridSets : String[] = ["Grid Set 1", "Grid Set 2", "Grid Set 3", "Grid Set 4"];
+  timeSets : String[] = ["Time Set 1", "Time Set 2", "Time Set 3"];
+  outputSets : String[][] = [];
 
   
 
@@ -21,7 +27,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
   }
 
-  addOutputSet() {
-    this.outputSets.push(["Mandatory raob", "sonde vars", "1 x 1 regular", "Time Set 1"])
+  addOutputSet(levelSet, varSet, gridSet, timeSet) {
+    this.outputSets.push([levelSet, varSet, gridSet, timeSet])
   }
 }
