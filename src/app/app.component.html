@@ -5,15 +5,16 @@
   <h3>nop <input id = "nop" type = "number" size = "50"></h3>
   <h3>nel [xy] <input id = "nelxy" type = "number"></h3>
 </div>
-<div class = domainspacer></div>
+<div class = "domainspacer"></div>
 <div id = "Domain Setup2" class = "container2">
   <h3>nel z <input id = "nelz" type = "number"></h3>
   <h3>delta t <input id = "t" type = "number" step = "0.001"></h3>
 </div>
-<div class = domainspacer></div>
+<div class = physicsspacer></div>
 <div id = "physics">
   <div>
-  <label for="physics">Choose a CCPP File: </label>
+  <h2 id = "pytxt">Physics</h2>
+  <label id = "pylabel" for="physics">Choose a CCPP File:<div class = "domainspacer"></div></label>
     <select id="physics_files">
       <option value = RAMS.xml>RAMS.xml</option>
       <option value = FV3GFS.xml>FV3GFS.xml</option>
