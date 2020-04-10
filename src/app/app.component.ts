@@ -46,10 +46,18 @@ export class AppComponent implements OnInit {
 
   addOutputSet(levelSet, varSet, gridSet, timeSet) {
     if (levelSet && varSet && gridSet && timeSet) {
-      this.outputSets.push([levelSet, varSet, gridSet, timeSet])
+      let temp = [[levelSet, varSet, gridSet, timeSet]]
+      for (let i = 0; i < this.outputSets.length; i++) {
+        temp.push(this.outputSets[i]);
+      }
+      this.outputSets = temp
     } else {
       this.openErrorSnackBar();
     }
+  }
+
+  deleteOutputSet(index) {
+    this.outputSets.splice(index, 1);
   }
 }
 
