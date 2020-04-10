@@ -23,7 +23,6 @@
 </div>
 </div>
 
-
 <div>
   <div id = "Boxholder">
     <div class = "Limitholder">
@@ -103,43 +102,38 @@
   <br/>
   <br/>
 
-  <div id="scroll_wrapper">
-    <div class="scrollmenu">
-      <table *ngIf="outputSets.length > 0; else noOutputSets">
-        <tr>
-          <th> </th>
-          <td *ngFor="let outputSet of outputSets; let i = index">
-            {{i + 1}}
-          </td>
-        </tr>
-        <tr>
-          <td>Level</td>
-          <td *ngFor="let outputSet of outputSets">
-            {{outputSet[0]}}
-          </td>
-        </tr>
-        <tr>
-          <td>Var</td>
-          <td *ngFor="let outputSet of outputSets">
-            {{outputSet[1]}}
-          </td>
-        </tr>
-        <tr>
-          <td>Grid</td>
-          <td *ngFor="let outputSet of outputSets">
-            {{outputSet[2]}}
-          </td>
-        </tr>
-        <tr>
-          <td>Time</td>
-          <td *ngFor="let outputSet of outputSets">
-            {{outputSet[3]}}
-          </td>
-        </tr>
-      </table>
-      <ng-template #noOutputSets> 
-        <h1> No output sets have been made yet! </h1> 
-      </ng-template>
+  <ng-template [ngIf]="outputSets.length > 0" [ngIfElse]="noOutputSets">
+    <div id="scroll_wrapper">
+      <div class="scrollmenu">
+        <table>
+          <tr>
+            <th> </th>
+            <td> Level </td>
+            <td> Var </td>
+            <td> Grid </td>
+            <td> Time </td>
+            <td> Delete </td>
+          </tr>
+          <tr *ngFor="let outputSet of outputSets; let i = index">
+            <td> {{ outputSets.length - i }} </td>
+            <td> {{outputSet[0] }} </td>
+            <td> {{outputSet[1] }} </td>
+            <td> {{outputSet[2] }} </td>
+            <td> {{outputSet[3] }} </td>
+            <td> 
+              <button mat-raised-button color="warn" (click)="deleteOutputSet(i)">Delete</button>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
-  </div>
+  </ng-template>
+
+  <ng-template #noOutputSets>
+    <div id="scroll_wrapper">
+      <div class="empty">
+        <h1> No output sets have been made yet! </h1>
+      </div>
+    </div> 
+  </ng-template>
 </div>
