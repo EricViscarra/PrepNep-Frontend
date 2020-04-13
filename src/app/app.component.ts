@@ -1,5 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material'
+import { 
+  MatSnackBar,
+  MatDialog,
+  MatDialogConfig,
+  MatDialogRef
+} from '@angular/material'
+import { ErrorSnackBarComponent } from './error-snack-bar/error-snack-bar.component'
+import { LevelSetComponent } from './level-set/level-set.component'
+import { VariableSetComponent } from './variable-set/variable-set.component';
+import { GridSetComponent } from './grid-set/grid-set.component';
+import { TimeSetComponent } from './time-set/time-set.component';
+
 
 @Component({
   selector: 'app-root',
@@ -8,45 +19,63 @@ import { MatSnackBar } from '@angular/material'
 })
 export class AppComponent implements OnInit {
 
+  ngOnInit() {
+  }
+
+  constructor(private snackBar: MatSnackBar,
+    private dialog: MatDialog) {}
+
   title = 'PrepNep-Frontend';
 
   pickedLevelSet : string = null;
-  pickedVarSet : string = null;
+  pickedVariableSet : string = null;
   pickedGridSet : string = null;
   pickedTimeSet : string = null;
   levelSets : String[] = ["Level Set 1", "Level Set 2", "Level Set 3"];
-  varSets : String[] = ["Var Set 1", "Var Set 2", "Var Set 3"];
+  variableSets : String[] = ["Var Set 1", "Var Set 2", "Var Set 3"];
   gridSets : String[] = ["Grid Set 1", "Grid Set 2", "Grid Set 3", "Grid Set 4"];
   timeSets : String[] = ["Time Set 1", "Time Set 2", "Time Set 3"];
   outputSets : String[][] = [];
 
-  openDialog(): void {/*
-    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-      width: '250px',
-      data: {name: this.name, animal: this.animal}
-    });
+  createInputSet(setType) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.animal = result;
-    });
-    */ 
+    if (setType == "Level") {
+      dialogConfig.data = {
+        numLevelSets:  this.levelSets.length
+      }
+      this.dialog.open(LevelSetComponent, dialogConfig);
+    } else if (setType =="Variable") {
+      this.dialog.open(VariableSetComponent, dialogConfig);
+    } else if (setType == "Grid") {
+      this.dialog.open(GridSetComponent, dialogConfig);
+    } else if (setType == "Time") {
+      this.dialog.open(TimeSetComponent, dialogConfig);
+    }
   }
 
-  
-
-  constructor(private snackBar: MatSnackBar) {}
-
-  ngOnInit() {
+  //Probably doesnt need to exist, just need to make delete - button next them.
+  deleteInputSet(setType) {
+    if (setType == "Level") {
+    } else if (setType =="Variable") {
+    } else if (setType == "Grid") {
+    } else if (setType == "Time") {
+    }
   }
 
   openErrorSnackBar() {
-    this.snackBar.openFromComponent(ErrorSnackBarComponent, {duration: 4000})
+    this.snackBar.openFromComponent(ErrorSnackBarComponent, 
+      {
+        duration: 4000,
+        panelClass: ['error-snackbar']
+      });
   }
 
-  addOutputSet(levelSet, varSet, gridSet, timeSet) {
-    if (levelSet && varSet && gridSet && timeSet) {
-      let temp = [[levelSet, varSet, gridSet, timeSet]]
+  addOutputSet(levelSet, variableSet, gridSet, timeSet) {
+    if (levelSet && variableSet && gridSet && timeSet) {
+      let temp = [[levelSet, variableSet, gridSet, timeSet]]
       for (let i = 0; i < this.outputSets.length; i++) {
         temp.push(this.outputSets[i]);
       }
@@ -60,14 +89,3 @@ export class AppComponent implements OnInit {
     this.outputSets.splice(index, 1);
   }
 }
-
-@Component({
-  selector: 'error-snack-bar',
-  templateUrl: 'dialog-templates/error-snack-bar.html',
-  styles: [`
-    .error-text {
-      color: yellow;
-    }
-  `],
-})
-export class ErrorSnackBarComponent {}

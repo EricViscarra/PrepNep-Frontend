@@ -1,4 +1,3 @@
-
 <div id = "DomainPhysics">
 <div id = "Domain Setup" class = "container">
   <h2>Domain Setup</h2>
@@ -38,8 +37,8 @@
       </mat-radio-group>
       </div>
       <div class = "Button-holder">
-        <button class = "LimiterButton" mat-raised-button color="accent" (click)="openDialog()">+</button>
-        <button class = "LimiterButton" mat-raised-button color="accent" (click)="openDialog()">-</button>
+        <button class = "LimiterButton" mat-raised-button color="accent" (click)="createInputSet('Level')">+</button>
+        <button class = "LimiterButton" mat-raised-button color="accent" (click)="deleteInputSet('Level')">-</button>
       </div>
     </div>
     <div class = "Limitholder">
@@ -48,15 +47,15 @@
         <mat-radio-group
         aria-labelledby="example-radio-group-label"
         class="example-radio-group"
-        [(ngModel)]="pickedVarSet">
-          <mat-radio-button class="example-radio-button" *ngFor="let varSet of varSets" [value]="varSet">
-            {{varSet}} 
+        [(ngModel)]="pickedVariableSet">
+          <mat-radio-button class="example-radio-button" *ngFor="let variableSet of variableSets" [value]="variableSet">
+            {{variableSet}} 
           </mat-radio-button>
         </mat-radio-group>
       </div>
       <div class = "Button-holder">
-        <button class = "LimiterButton" mat-raised-button color="accent" (click)="openDialog()">+</button>
-        <button class = "LimiterButton" mat-raised-button color="accent" (click)="openDialog()">-</button>
+        <button class = "LimiterButton" mat-raised-button color="accent" (click)="createInputSet('Variable')">+</button>
+        <button class = "LimiterButton" mat-raised-button color="accent" (click)="deleteInputSet('Variable')">-</button>
       </div>
     </div>
     <div class = "Limitholder">
@@ -72,8 +71,8 @@
         </mat-radio-group>
       </div>
       <div class = "Button-holder">
-        <button class = "LimiterButton" mat-raised-button color="accent" (click)="openDialog()">+</button>
-        <button class = "LimiterButton" mat-raised-button color="accent" (click)="openDialog()">-</button>
+        <button class = "LimiterButton" mat-raised-button color="accent" (click)="createInputSet('Grid')">+</button>
+        <button class = "LimiterButton" mat-raised-button color="accent" (click)="deleteInputSet('Grid')">-</button>
       </div>
     </div>
     <div class = "Limitholder">
@@ -89,17 +88,16 @@
         </mat-radio-group>
       </div>
       <div class = "Button-holder">
-        <button class = "LimiterButton" mat-raised-button color="accent" (click)="openDialog()">+</button>
-        <button class = "LimiterButton" mat-raised-button color="accent" (click)="openDialog()">-</button>
+        <button class = "LimiterButton" mat-raised-button color="accent" (click)="createInputSet('Time')">+</button>
+        <button class = "LimiterButton" mat-raised-button color="accent" (click)="deleteInputSet('Time')">-</button>
       </div>
     </div>
   </div>
 
   <div id="btn_wrapper">
-    <button mat-raised-button color="primary" (click)="addOutputSet(pickedLevelSet, pickedVarSet, pickedGridSet, pickedTimeSet)">Create Output Set</button>
+    <button mat-raised-button color="primary" (click)="addOutputSet(pickedLevelSet, pickedVariableSet, pickedGridSet, pickedTimeSet)">Create Output Set</button>
   </div>
 
-  <br/>
   <br/>
 
   <ng-template [ngIf]="outputSets.length > 0" [ngIfElse]="noOutputSets">
@@ -109,7 +107,7 @@
           <tr>
             <th> </th>
             <td> Level </td>
-            <td> Var </td>
+            <td> Variable </td>
             <td> Grid </td>
             <td> Time </td>
             <td> Delete </td>
