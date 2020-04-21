@@ -20,7 +20,56 @@ import { TimeSet } from './classes/timeSet';
 })
 export class AppComponent implements OnInit {
 
-  ngOnInit() {}
+  ngOnInit() {
+    var ls1 = new LevelSet();
+    ls1.setName = "Level Set 1";
+    ls1.recordType = "pressure";
+    ls1.intervalType = "points";
+    ls1.pressures = [100, 200, 300];
+    this.levelSets.push(ls1);
+    var ls2 = new LevelSet();
+    ls2.setName = "Level Set 2";
+    ls2.recordType = "height";
+    ls2.intervalType = "rule";
+    ls2.start = 0;
+    ls2.step = 500;
+    ls2.last = 5000;
+    this.levelSets.push(ls2);
+    var vs1 = new VariableSet();
+    vs1.setName = "Variable Set 1";
+    vs1.recordType = "varset";
+    vs1.variables = ["u", "v", "w", "temperature"];
+    this.variableSets.push(vs1);
+    var vs2 = new VariableSet();
+    vs2.setName = "Variable Set 2";
+    vs2.recordType = "varset";
+    vs2.variables = ["u", "v", "heights", "totprep"];
+    this.variableSets.push(vs2);
+    var gs1 = new GridSet();
+    gs1.setName = "Grid Set 1";
+    gs1.recordType = "grid";
+    gs1.gridType = "latlon";
+    gs1.spacing = 1;
+    this.gridSets.push(gs1);
+    var ts1 = new TimeSet();
+    ts1.setName = "Time Set 1";
+    ts1.recordType = "time";
+    ts1.intervalType = "rule";
+    ts1.start = 0;
+    ts1.step = 15;
+    ts1.last = 3600;
+    ts1.timescale = 60;
+    this.timeSets.push(ts1);
+    var ts2 = new TimeSet();
+    ts2.setName = "Time Set 2";
+    ts2.recordType = "time";
+    ts2.intervalType = "rule";
+    ts2.start = 0;
+    ts2.step = 3;
+    ts2.last = 120;
+    ts2.timescale = 3600;
+    this.timeSets.push(ts2);
+  }
 
   constructor(private snackBar: MatSnackBar, private dialog: MatDialog) {}
 
@@ -42,10 +91,10 @@ export class AppComponent implements OnInit {
   pickedVariableSet : VariableSet = null;
   pickedGridSet : GridSet = null;
   pickedTimeSet : TimeSet = null;
-  levelSets : LevelSet[] = [new LevelSet()];
-  variableSets : VariableSet[] = [new VariableSet()];
-  gridSets : GridSet[] = [new GridSet()];
-  timeSets : TimeSet[] = [new TimeSet()];
+  levelSets : LevelSet[] = [];
+  variableSets : VariableSet[] = [];
+  gridSets : GridSet[] = [];
+  timeSets : TimeSet[] = [];
   outputSets : string[][] = [];
 
   createInputSet(setType) {
