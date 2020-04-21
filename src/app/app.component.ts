@@ -220,7 +220,7 @@ export class AppComponent implements OnInit {
     if (levelSet && variableSet && gridSet && timeSet) {
       let temp = [[levelSet, variableSet, gridSet, timeSet]]
       //duplicate made in proper order for export
-      let tempsave = [[gridSet,timeSet,variableSet,levelSet]]
+      let tempsave = [[gridSet.setName,timeSet.setName,variableSet.setName,levelSet.setName]]
       for (let i = 0; i < this.outputSets.length; i++) {
         temp.push(this.outputSets[i]);
         //duplicate pushed
