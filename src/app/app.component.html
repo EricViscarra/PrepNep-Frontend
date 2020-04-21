@@ -1,25 +1,49 @@
 <div id = "DomainPhysics">
-<div id = "Domain Setup" class = "container">
-  <h2>Domain Setup</h2>
-  <h3>nop <input id = "nop" type = "number" size = "50"></h3>
-  <h3>nel [xy] <input id = "nelxy" type = "number"></h3>
-</div>
-<div class = "domainspacer"></div>
-<div id = "Domain Setup2" class = "container2">
-  <h3>nel z <input id = "nelz" type = "number"></h3>
-  <h3>delta t <input id = "t" type = "number" step = "0.001"></h3>
-</div>
-<div class = physicsspacer></div>
-<div id = "physics">
-  <div>
-  <h2 id = "pytxt">Physics</h2>
-  <label id = "pylabel" for="physics">Choose a CCPP File:<div class = "domainspacer"></div></label>
-    <select id="physics_files">
-      <option value = RAMS.xml>RAMS.xml</option>
-      <option value = FV3GFS.xml>FV3GFS.xml</option>
-    </select>
+  <div id = "AllDomain">
+    <h2>Domain Setup</h2>
+    <div id = "Domain Setup" class = "container">
+      <h3>nop 
+        <mat-form-field>
+          <mat-label> assign nop value </mat-label>
+          <input type="number" matInput [(ngModel)]="nop">
+        </mat-form-field>
+      </h3>
+      <h3>nel [xy] 
+        <mat-form-field>
+          <mat-label> assign nel [xy] value </mat-label>
+          <input type="number" matInput [(ngModel)]="nel_xy">
+        </mat-form-field>
+      </h3>
+    </div>
+    <div class = "domainspacer"></div>
+    <div id = "Domain Setup2" class = "container2">
+      <h3>	nel z 
+        <mat-form-field>
+          <mat-label> assign nel z value </mat-label>
+          <input type="number" matInput [(ngModel)]="nel_z">
+        </mat-form-field>
+      </h3>
+      <h3>	&Delta;t 
+        <mat-form-field>
+          <mat-label> assign 	&Delta;t value </mat-label>
+          <input type="number" matInput [(ngModel)]="delta_t">
+        </mat-form-field>
+      </h3>
+    </div>
+    <div class = physicsspacer></div>
   </div>
-</div>
+  <div id = "physics">
+    <h2 id = "pytxt"> Physics </h2>
+    <h3> Choose a CCPP file
+      <mat-form-field>
+        <mat-label> Select CCPP File </mat-label>
+        <mat-select [(ngModel)]="physics">
+            <mat-option value="RAMS.xml"> RAMS.xml </mat-option>
+            <mat-option value="FV3GFS.xml"> FV3GFS.xml </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </h3>
+  </div>
 </div>
 
 <div>
@@ -31,14 +55,23 @@
         aria-labelledby="example-radio-group-label"
         class="example-radio-group"
         [(ngModel)]="pickedLevelSet">
-          <mat-radio-button class="example-radio-button" *ngFor="let levelSet of levelSets" [value]="levelSet">
-            {{levelSet}} 
+          <mat-radio-button class="example-radio-button" *ngFor="let levelSet of levelSets, let i = index" [value]="levelSet">
+            {{levelSet.setName}} 
+            &nbsp;
+            <button mat-mini-fab color="basic" (click)="editInputSet('Level', i)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            &nbsp;
+            <button mat-mini-fab color="warn" (click)="deleteInputSet('Level', i)">
+              <mat-icon>delete</mat-icon>
+            </button>
           </mat-radio-button>
-      </mat-radio-group>
+        </mat-radio-group>
       </div>
       <div class = "Button-holder">
-        <button class = "LimiterButton" mat-raised-button color="accent" (click)="createInputSet('Level')">+</button>
-        <button class = "LimiterButton" mat-raised-button color="accent" (click)="deleteInputSet('Level')">-</button>
+        <button class = "LimiterButton" mat-raised-button color="accent" (click)="createInputSet('Level')">
+          Create Level Set
+        </button>
       </div>
     </div>
     <div class = "Limitholder">
@@ -48,14 +81,23 @@
         aria-labelledby="example-radio-group-label"
         class="example-radio-group"
         [(ngModel)]="pickedVariableSet">
-          <mat-radio-button class="example-radio-button" *ngFor="let variableSet of variableSets" [value]="variableSet">
-            {{variableSet}} 
+          <mat-radio-button class="example-radio-button" *ngFor="let variableSet of variableSets, let i = index" [value]="variableSet">
+            {{variableSet.setName}} 
+            &nbsp;
+            <button mat-mini-fab color="basic" (click)="editInputSet('Variable', i)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            &nbsp;
+            <button mat-mini-fab color="warn" (click)="deleteInputSet('Variable', i)">
+              <mat-icon>delete</mat-icon>
+            </button>
           </mat-radio-button>
         </mat-radio-group>
       </div>
       <div class = "Button-holder">
-        <button class = "LimiterButton" mat-raised-button color="accent" (click)="createInputSet('Variable')">+</button>
-        <button class = "LimiterButton" mat-raised-button color="accent" (click)="deleteInputSet('Variable')">-</button>
+        <button class = "LimiterButton" mat-raised-button color="accent" (click)="createInputSet('Variable')">
+          Create Variable Set
+        </button>
       </div>
     </div>
     <div class = "Limitholder">
@@ -65,14 +107,23 @@
         aria-labelledby="example-radio-group-label"
         class="example-radio-group"
         [(ngModel)]="pickedGridSet">
-          <mat-radio-button class="example-radio-button" *ngFor="let gridSet of gridSets" [value]="gridSet">
-            {{gridSet}} 
+          <mat-radio-button class="example-radio-button" *ngFor="let gridSet of gridSets, let i = index" [value]="gridSet">
+            {{gridSet.setName}} 
+            &nbsp;
+            <button mat-mini-fab color="basic" (click)="editInputSet('Grid', i)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            &nbsp;
+            <button mat-mini-fab color="warn" (click)="deleteInputSet('Grid', i)">
+              <mat-icon>delete</mat-icon>
+            </button>
           </mat-radio-button>
         </mat-radio-group>
       </div>
       <div class = "Button-holder">
-        <button class = "LimiterButton" mat-raised-button color="accent" (click)="createInputSet('Grid')">+</button>
-        <button class = "LimiterButton" mat-raised-button color="accent" (click)="deleteInputSet('Grid')">-</button>
+        <button class = "LimiterButton" mat-raised-button color="accent" (click)="createInputSet('Grid')">
+          Create Grid Set
+        </button>
       </div>
     </div>
     <div class = "Limitholder">
@@ -82,14 +133,23 @@
         aria-labelledby="example-radio-group-label"
         class="example-radio-group"
         [(ngModel)]="pickedTimeSet">
-          <mat-radio-button class="example-radio-button" *ngFor="let timeSet of timeSets" [value]="timeSet">
-            {{timeSet}} 
+          <mat-radio-button class="example-radio-button" *ngFor="let timeSet of timeSets, let i = index" [value]="timeSet">
+            {{timeSet.setName}} 
+            &nbsp;
+            <button mat-mini-fab color="basic" (click)="editInputSet('Time', i)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            &nbsp;
+            <button mat-mini-fab color="warn" (click)="deleteInputSet('Time', i)">
+              <mat-icon>delete</mat-icon>
+            </button>
           </mat-radio-button>
         </mat-radio-group>
       </div>
       <div class = "Button-holder">
-        <button class = "LimiterButton" mat-raised-button color="accent" (click)="createInputSet('Time')">+</button>
-        <button class = "LimiterButton" mat-raised-button color="accent" (click)="deleteInputSet('Time')">-</button>
+        <button class = "LimiterButton" mat-raised-button color="accent" (click)="createInputSet('Time')">
+          Create Time Set
+        </button>
       </div>
     </div>
   </div>
@@ -97,7 +157,6 @@
   <div id="btn_wrapper">
     <button mat-raised-button color="primary" (click)="addOutputSet(pickedLevelSet, pickedVariableSet, pickedGridSet, pickedTimeSet)">Create Output Set</button>
   </div>
-
   <br/>
 
   <ng-template [ngIf]="outputSets.length > 0" [ngIfElse]="noOutputSets">
@@ -114,10 +173,10 @@
           </tr>
           <tr *ngFor="let outputSet of outputSets; let i = index">
             <td> {{ outputSets.length - i }} </td>
-            <td> {{outputSet[0] }} </td>
-            <td> {{outputSet[1] }} </td>
-            <td> {{outputSet[2] }} </td>
-            <td> {{outputSet[3] }} </td>
+            <td> {{outputSet[0].setName }} </td>
+            <td> {{outputSet[1].setName }} </td>
+            <td> {{outputSet[2].setName }} </td>
+            <td> {{outputSet[3].setName }} </td>
             <td> 
               <button mat-raised-button color="warn" (click)="deleteOutputSet(i)">Delete</button>
             </td>
