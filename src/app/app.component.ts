@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material'
+import { TestBed } from '@angular/core/testing';
+
+declare function exportFilej(sets): any;
 
 @Component({
   selector: 'app-root',
@@ -19,6 +22,7 @@ export class AppComponent implements OnInit {
   gridSets : String[] = ["Grid Set 1", "Grid Set 2", "Grid Set 3", "Grid Set 4"];
   timeSets : String[] = ["Time Set 1", "Time Set 2", "Time Set 3"];
   outputSets : String[][] = [];
+  outputordered : String[][] = [];
 
   openDialog(): void {/*
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
@@ -33,7 +37,7 @@ export class AppComponent implements OnInit {
     */ 
   }
 
-  
+  //levelstore: string[];
 
   constructor(private snackBar: MatSnackBar) {}
 
@@ -47,13 +51,23 @@ export class AppComponent implements OnInit {
   addOutputSet(levelSet, varSet, gridSet, timeSet) {
     if (levelSet && varSet && gridSet && timeSet) {
       let temp = [[levelSet, varSet, gridSet, timeSet]]
+      //duplicate made in proper order for export
+      let tempsave = [[gridSet,timeSet,varSet,levelSet]]
       for (let i = 0; i < this.outputSets.length; i++) {
         temp.push(this.outputSets[i]);
+        //duplicate pushed
+        tempsave.push(this.outputordered[i])
       }
       this.outputSets = temp
+      //duplicate saved
+      this.outputordered = tempsave;
     } else {
       this.openErrorSnackBar();
     }
+  }
+
+  exportFile(){
+    exportFilej(this.outputordered);
   }
 
   deleteOutputSet(index) {
