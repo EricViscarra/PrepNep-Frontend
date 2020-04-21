@@ -34,7 +34,6 @@ export class TimeSetComponent implements OnInit {
       this.timeSet.timescale) {
       this.dialogRef.close(this.timeSet);
     } else {
-      console.log(this.timeSet);
       this.openErrorSnackBar("Fill out all of the required fields! *");
     }
   } 

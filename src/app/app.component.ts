@@ -157,7 +157,7 @@ export class AppComponent implements OnInit {
       }
       const dialogRef = this.dialog.open(LevelSetComponent, dialogConfig);
       dialogRef.afterClosed().subscribe(
-        data => (data) ? this.levelSets.splice(index, 1, data) : console.log(data)
+        data => (data) ? this.levelSets.splice(index, 1, data) : console.log("Form cancelled.")
       );
     } else if (setType == this.VARIABLE) {
       dialogConfig.data = {
@@ -166,7 +166,7 @@ export class AppComponent implements OnInit {
       }
       const dialogRef = this.dialog.open(VariableSetComponent, dialogConfig);
       dialogRef.afterClosed().subscribe(
-        data => (data) ? this.variableSets.splice(index, 1, data) : console.log(data)
+        data => (data) ? this.variableSets.splice(index, 1, data) : console.log("Form cancelled.")
       );
     } else if (setType == this.GRID) {
       dialogConfig.data = {
@@ -175,7 +175,7 @@ export class AppComponent implements OnInit {
       }
       const dialogRef = this.dialog.open(GridSetComponent, dialogConfig);
       dialogRef.afterClosed().subscribe(
-        data => (data) ? this.gridSets.splice(index, 1, data) : console.log(data)
+        data => (data) ? this.gridSets.splice(index, 1, data) : console.log("Form cancelled.")
       );
     } else if (setType == this.TIME) {
       dialogConfig.data = {
@@ -184,7 +184,7 @@ export class AppComponent implements OnInit {
       }
       const dialogRef = this.dialog.open(TimeSetComponent, dialogConfig);
       dialogRef.afterClosed().subscribe(
-        data => (data) ? this.timeSets.splice(index, 1, data) : console.log(data)
+        data => (data) ? this.timeSets.splice(index, 1, data) : console.log("Form cancelled.")
       );
     } else {
       console.log("That input set type does not exist!")
