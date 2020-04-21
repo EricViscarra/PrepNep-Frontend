@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { 
+import {
   MatSnackBar,
   MatDialog,
   MatDialogConfig
@@ -13,6 +13,7 @@ import { LevelSet } from './classes/levelSet';
 import { VariableSet } from './classes/variableSet';
 import { GridSet } from './classes/gridSet';
 import { TimeSet } from './classes/timeSet';
+declare function exportFilej(sets): any;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -78,7 +79,7 @@ export class AppComponent implements OnInit {
   nop: number;
   nel_xy: number;
   nel_z: number;
-  delta_t: number;  
+  delta_t: number;
   physics: string;
 
 
@@ -96,6 +97,7 @@ export class AppComponent implements OnInit {
   gridSets : GridSet[] = [];
   timeSets : TimeSet[] = [];
   outputSets : string[][] = [];
+  outputordered : String[][] = [];
 
   createInputSet(setType) {
     const dialogConfig = new MatDialogConfig();
@@ -206,7 +208,7 @@ export class AppComponent implements OnInit {
   }
 
   openErrorSnackBar(msg) {
-    this.snackBar.openFromComponent(ErrorSnackBarComponent, 
+    this.snackBar.openFromComponent(ErrorSnackBarComponent,
       {
         duration: 4000,
         panelClass: ['error-snackbar'],
@@ -217,18 +219,29 @@ export class AppComponent implements OnInit {
   addOutputSet(levelSet, variableSet, gridSet, timeSet) {
     if (levelSet && variableSet && gridSet && timeSet) {
       let temp = [[levelSet, variableSet, gridSet, timeSet]]
+      //duplicate made in proper order for export
+      let tempsave = [[gridSet,timeSet,variableSet,levelSet]]
       for (let i = 0; i < this.outputSets.length; i++) {
         temp.push(this.outputSets[i]);
+        //duplicate pushed
+        tempsave.push(this.outputordered[i])
       }
       this.outputSets = temp
       //openSuccessfulOutputSetCreation()
+      //duplicate saved
+      this.outputordered = tempsave;
     } else {
       this.openErrorSnackBar("At least 1 set from each box is required to make an output set!");
     }
   }
 
+  exportFile(){
+    exportFilej(this.outputordered);
+  }
+
   deleteOutputSet(index) {
     this.outputSets.splice(index, 1);
+    this.outputordered.splice(index,1);
   }
   //DeleteInputSet(index) after a "are you sure" dialog
 
