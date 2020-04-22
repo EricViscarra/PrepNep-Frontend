@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { ErrorSnackBarComponent } from './error-snack-bar/error-snack-bar.component'
+import { SnackBarComponent } from './snack-bar/snack-bar.component'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent} from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,24 +21,27 @@ import { LevelSetComponent } from './level-set/level-set.component'
 import { VariableSetComponent } from './variable-set/variable-set.component';
 import { GridSetComponent } from './grid-set/grid-set.component';
 import { TimeSetComponent } from './time-set/time-set.component';
+import { OutputSetComponent } from './output-set/output-set.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ErrorSnackBarComponent,
+    SnackBarComponent,
     LevelSetComponent,
     VariableSetComponent,
     TimeSetComponent,
-    GridSetComponent
+    GridSetComponent,
+    OutputSetComponent
   ],
   entryComponents: [
-    ErrorSnackBarComponent,
+    SnackBarComponent,
     LevelSetComponent,
     TimeSetComponent,
     VariableSetComponent,
-    GridSetComponent
+    GridSetComponent,
+    OutputSetComponent
   ],
   imports: [
     BrowserModule,
