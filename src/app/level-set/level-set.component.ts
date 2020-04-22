@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar, } from '@angular/material';
-import { ErrorSnackBarComponent } from '../error-snack-bar/error-snack-bar.component'
+import { SnackBarComponent } from '../snack-bar/snack-bar.component'
 import { LevelSet } from '../classes/levelSet';
 
 
@@ -17,6 +17,7 @@ export class LevelSetComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any) {
       this.levelSet = data.levelSet;
       if (data.levelSet.pressures) {
+        this.levelSet.pressures = data.nonRefArr;
         this.numPressures = this.levelSet.pressures.length;
       } else {
         this.levelSet.pressures = [];
@@ -48,16 +49,17 @@ export class LevelSetComponent implements OnInit {
       !this.levelSet.pressures.includes(null) &&
       !this.levelSet.pressures.includes(undefined);
     } else if (this.levelSet.recordType == 'height' && this.levelSet.intervalType == 'rule') {
-      valid = (this.levelSet.start && this.levelSet.step && this.levelSet.last);
+      valid = ((this.levelSet.start || this.levelSet.start == 0) && 
+        (this.levelSet.step || this.levelSet.step == 0) && 
+        (this.levelSet.last || this.levelSet.last == 0));
     } else {
       valid = false;
       console.log("Level set not correctly set.");
     }
-    var validRule = (this.levelSet.start && this.levelSet.step && this.levelSet.last);
     if (this.levelSet.setName && valid) {
       this.dialogRef.close(this.levelSet);
     } else {
-      this.openErrorSnackBar("Fill out all of the required fields! *");
+      this.openSnackBar("Fill out all of the required fields! *", "error-snackbar");
     }
   } 
 
@@ -65,11 +67,11 @@ export class LevelSetComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  openErrorSnackBar(msg) {
-    this.snackBar.openFromComponent(ErrorSnackBarComponent, 
+  openSnackBar(msg, bg) {
+    this.snackBar.openFromComponent(SnackBarComponent, 
       {
-        duration: 4000,
-        panelClass: ['error-snackbar'],
+        duration: 2000,
+        panelClass: [bg],
         data: msg
       });
   }
