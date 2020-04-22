@@ -203,11 +203,16 @@ export class AppComponent implements OnInit {
 
     //save form depending on type of form
     if (setType == this.LEVEL) {
-      
+      var sepArr;
+      if (this.levelSets[index].pressures) {
+        sepArr = [...this.levelSets[index].pressures];
+      } else {
+        sepArr = null;
+      }
       dialogConfig.data = {
         numLevelSets:  this.levelSets.length,
         levelSet: Object.assign({}, this.levelSets[index]),
-        nonRefArr: [...this.levelSets[index].pressures]
+        nonRefArr: sepArr
       }
       const dialogRef = this.dialog.open(LevelSetComponent, dialogConfig);
       dialogRef.afterClosed().subscribe(
