@@ -13,7 +13,7 @@ import { LevelSet } from './classes/levelSet';
 import { VariableSet } from './classes/variableSet';
 import { GridSet } from './classes/gridSet';
 import { TimeSet } from './classes/timeSet';
-declare function exportFilej(sets): any;
+declare function exportFilej(setNames, sets): any;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -97,7 +97,7 @@ export class AppComponent implements OnInit {
   gridSets : GridSet[] = [];
   timeSets : TimeSet[] = [];
   outputSets : string[][] = [];
-  outputordered : String[][] = [];
+  outputName : String[][] = [];
 
   createInputSet(setType) {
     const dialogConfig = new MatDialogConfig();
@@ -220,28 +220,28 @@ export class AppComponent implements OnInit {
     if (levelSet && variableSet && gridSet && timeSet) {
       let temp = [[levelSet, variableSet, gridSet, timeSet]]
       //duplicate made in proper order for export
-      let tempsave = [[gridSet.setName,timeSet.setName,variableSet.setName,levelSet.setName]]
+      let tempnamesave = [[gridSet.setName,timeSet.setName,variableSet.setName,levelSet.setName]]
       for (let i = 0; i < this.outputSets.length; i++) {
         temp.push(this.outputSets[i]);
         //duplicate pushed
-        tempsave.push(this.outputordered[i])
+        tempnamesave.push(this.outputName[i])
       }
       this.outputSets = temp
       //openSuccessfulOutputSetCreation()
       //duplicate saved
-      this.outputordered = tempsave;
+      this.outputName = tempnamesave;
     } else {
       this.openErrorSnackBar("At least 1 set from each box is required to make an output set!");
     }
   }
 
   exportFile(){
-    exportFilej(this.outputordered);
+    exportFilej(this.outputName, this.outputSets);
   }
 
   deleteOutputSet(index) {
     this.outputSets.splice(index, 1);
-    this.outputordered.splice(index,1);
+    this.outputName.splice(index,1);
   }
   //DeleteInputSet(index) after a "are you sure" dialog
 

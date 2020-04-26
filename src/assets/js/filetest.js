@@ -9,10 +9,14 @@
 //     document.body.removeChild(a);
 // }
 
-function exportFilej(sets){
-    var test = ""
-    for(var i = 0; i < sets.length; i++){
-        var temp = JSON.stringify(sets[i])
+function exportData(sets){
+    var test = "";
+    return test;
+}
+function exportOutput(setNames){
+    var test = "";
+    for(var i = 0; i < setNames.length; i++){
+        var temp = JSON.stringify(setNames[i])
         var count = 3;
         var t = "";
         for(ii = 0; ii < temp.length+1; ii++){
@@ -35,6 +39,15 @@ function exportFilej(sets){
         }
         test += "\n\n" +  "output" + i + ":\n" + "- record_type: Outstream \n- grid_set: " + temp;
     }
+    return test;
+}
+
+function exportFilej(setNames,sets){
+    alert(JSON.stringify(setNames[1]))
+    var data = exportData(sets);
+    var output = exportOutput(setNames);
+    var test = data + output;
+    
     const originalData = test;
     var a = document.createElement("a");
     a.href = URL.createObjectURL(new Blob([originalData], {type:"text/plain"}));
