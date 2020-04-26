@@ -101,7 +101,7 @@ function exportOutput(setNames){
         temp += "\n - grid_set: ["    + JSON.stringify(setNames[i]["gridSet"]["setName"])
         temp += "] \n - time_set: [" + JSON.stringify(setNames[i]["timeSet"]["setName"])
         temp += "] \n - var_set: "    + JSON.stringify(setNames[i]["variableSet"]["setName"])
-        temp += "\n - level_set: ["   + JSON.stringify(setNames[i]["levelSet"]["setName"]) + " ] \n \n"
+        temp += "\n - level_set: ["   + JSON.stringify(setNames[i]["levelSet"]["setName"]) + "] \n \n"
         test += temp;
         }
         for(var i = 0; i < test.length; i++){
