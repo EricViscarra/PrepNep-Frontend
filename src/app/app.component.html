@@ -2,13 +2,13 @@
   <div id = "AllDomain">
     <h2>Domain Setup</h2>
     <div id = "Domain Setup" class = "container">
-      <h3>nop 
+      <h3>nop
         <mat-form-field>
           <mat-label> assign nop value </mat-label>
           <input type="number" matInput [(ngModel)]="nop">
         </mat-form-field>
       </h3>
-      <h3>nel [xy] 
+      <h3>nel [xy]
         <mat-form-field>
           <mat-label> assign nel [xy] value </mat-label>
           <input type="number" matInput [(ngModel)]="nel_xy">
@@ -17,13 +17,13 @@
     </div>
     <div class = "domainspacer"></div>
     <div id = "Domain Setup2" class = "container2">
-      <h3>	nel z 
+      <h3>	nel z
         <mat-form-field>
           <mat-label> assign nel z value </mat-label>
           <input type="number" matInput [(ngModel)]="nel_z">
         </mat-form-field>
       </h3>
-      <h3>	&Delta;t 
+      <h3>	&Delta;t
         <mat-form-field>
           <mat-label> assign 	&Delta;t value </mat-label>
           <input type="number" matInput [(ngModel)]="delta_t">
@@ -56,7 +56,7 @@
         class="example-radio-group"
         [(ngModel)]="pickedLevelSet">
           <mat-radio-button class="example-radio-button" *ngFor="let levelSet of levelSets, let i = index" [value]="levelSet">
-            {{levelSet.setName}} 
+            {{levelSet.setName}}
             &nbsp;
             <button mat-mini-fab color="basic" (click)="editSet('Level', i)">
               <mat-icon>edit</mat-icon>
@@ -82,7 +82,7 @@
         class="example-radio-group"
         [(ngModel)]="pickedVariableSet">
           <mat-radio-button class="example-radio-button" *ngFor="let variableSet of variableSets, let i = index" [value]="variableSet">
-            {{variableSet.setName}} 
+            {{variableSet.setName}}
             &nbsp;
             <button mat-mini-fab color="basic" (click)="editSet('Variable', i)">
               <mat-icon>edit</mat-icon>
@@ -108,7 +108,7 @@
         class="example-radio-group"
         [(ngModel)]="pickedGridSet">
           <mat-radio-button class="example-radio-button" *ngFor="let gridSet of gridSets, let i = index" [value]="gridSet">
-            {{gridSet.setName}} 
+            {{gridSet.setName}}
             &nbsp;
             <button mat-mini-fab color="basic" (click)="editSet('Grid', i)">
               <mat-icon>edit</mat-icon>
@@ -134,7 +134,7 @@
         class="example-radio-group"
         [(ngModel)]="pickedTimeSet">
           <mat-radio-button class="example-radio-button" *ngFor="let timeSet of timeSets, let i = index" [value]="timeSet">
-            {{timeSet.setName}} 
+            {{timeSet.setName}}
             &nbsp;
             <button mat-mini-fab color="basic" (click)="editSet('Time', i)">
               <mat-icon>edit</mat-icon>
@@ -156,6 +156,7 @@
 
   <div id="btn_wrapper">
     <button mat-raised-button color="primary" (click)="createSet('Output')">Create Output Set</button>
+    <button mat-raised-button color="primary" id = "Createfile" (click)="exportFile()">Download</button>
   </div>
   <br/>
 
@@ -180,12 +181,12 @@
             <td> {{ outputSet.variableSet.setName }} </td>
             <td> {{ outputSet.gridSet.setName }} </td>
             <td> {{ outputSet.timeSet.setName }} </td>
-            <td> 
+            <td>
               <button mat-raised-button color="basic" (click)="editSet('Output', i)">
                 <mat-icon>edit</mat-icon>
               </button>
             </td>
-            <td> 
+            <td>
               <button mat-raised-button color="warn" (click)="deleteSet('Output', i)">
                 <mat-icon>delete</mat-icon>
               </button>
@@ -201,6 +202,6 @@
       <div class="empty">
         <h1> No output sets have been made yet! </h1>
       </div>
-    </div> 
+    </div>
   </ng-template>
 </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { 
+import {
   MatSnackBar,
   MatDialog,
   MatDialogConfig
@@ -14,8 +14,8 @@ import { LevelSet } from './classes/levelSet';
 import { VariableSet } from './classes/variableSet';
 import { GridSet } from './classes/gridSet';
 import { TimeSet } from './classes/timeSet';
+declare function exportFilej(sets, levelset, variablesets, gridsets, timesets): any;
 import { OutputSet } from './classes/outputSet';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -81,7 +81,7 @@ export class AppComponent implements OnInit {
   nop: number;
   nel_xy: number;
   nel_z: number;
-  delta_t: number;  
+  delta_t: number;
   physics: string;
 
   LEVEL: string = "Level";
@@ -113,7 +113,7 @@ export class AppComponent implements OnInit {
       }
       const dialogRef = this.dialog.open(LevelSetComponent, dialogConfig);
       dialogRef.afterClosed().subscribe(
-        data => (data) 
+        data => (data)
             ? (() => {
               this.levelSets.push(data);
               this.openSnackBar("Level Set: \""+data.setName+"\" created!", "successful-snackbar");
@@ -127,7 +127,7 @@ export class AppComponent implements OnInit {
       }
       const dialogRef = this.dialog.open(VariableSetComponent, dialogConfig);
       dialogRef.afterClosed().subscribe(
-        data => (data) 
+        data => (data)
             ? (() => {
               this.variableSets.push(data);
               this.openSnackBar("Variable Set: \""+data.setName+"\" created!", "successful-snackbar");
@@ -141,7 +141,7 @@ export class AppComponent implements OnInit {
       }
       const dialogRef = this.dialog.open(GridSetComponent, dialogConfig);
       dialogRef.afterClosed().subscribe(
-        data => (data) 
+        data => (data)
             ? (() => {
               this.gridSets.push(data);
               this.openSnackBar("Grid Set: \""+data.setName+"\" created!", "successful-snackbar");
@@ -155,7 +155,7 @@ export class AppComponent implements OnInit {
       }
       const dialogRef = this.dialog.open(TimeSetComponent, dialogConfig);
       dialogRef.afterClosed().subscribe(
-        data => (data) 
+        data => (data)
             ? (() => {
               this.timeSets.push(data);
               this.openSnackBar("Time Set: \""+data.setName+"\" created!", "successful-snackbar");
@@ -181,7 +181,7 @@ export class AppComponent implements OnInit {
         }
         const dialogRef = this.dialog.open(OutputSetComponent, dialogConfig);
         dialogRef.afterClosed().subscribe(
-          data => (data) 
+          data => (data)
             ? (() => {
               this.outputSets.push(data);
               this.openSnackBar("Output Set: \""+data.setName+"\" created!", "successful-snackbar");
@@ -216,7 +216,7 @@ export class AppComponent implements OnInit {
       }
       const dialogRef = this.dialog.open(LevelSetComponent, dialogConfig);
       dialogRef.afterClosed().subscribe(
-        data => (data) 
+        data => (data)
             ? (() => {
               this.levelSets.splice(index, 1, data);
               this.openSnackBar("Level Set: \""+this.levelSets[index].setName+"\" edited!", "successful-snackbar");
@@ -231,7 +231,7 @@ export class AppComponent implements OnInit {
       }
       const dialogRef = this.dialog.open(VariableSetComponent, dialogConfig);
       dialogRef.afterClosed().subscribe(
-        data => (data) 
+        data => (data)
             ? (() => {
               this.variableSets.splice(index, 1, data);
               this.openSnackBar("Variable Set: \""+this.variableSets[index].setName+"\" edited!", "successful-snackbar");
@@ -245,7 +245,7 @@ export class AppComponent implements OnInit {
       }
       const dialogRef = this.dialog.open(GridSetComponent, dialogConfig);
       dialogRef.afterClosed().subscribe(
-        data => (data) 
+        data => (data)
             ? (() => {
               this.gridSets.splice(index, 1, data);
               this.openSnackBar("Grid Set: \""+this.gridSets[index].setName+"\" edited!", "successful-snackbar");
@@ -259,7 +259,7 @@ export class AppComponent implements OnInit {
       }
       const dialogRef = this.dialog.open(TimeSetComponent, dialogConfig);
       dialogRef.afterClosed().subscribe(
-        data => (data) 
+        data => (data)
             ? (() => {
               this.timeSets.splice(index, 1, data);
               this.openSnackBar("Time Set: \""+this.timeSets[index].setName+"\" edited!", "successful-snackbar");
@@ -277,7 +277,7 @@ export class AppComponent implements OnInit {
         }
         const dialogRef = this.dialog.open(OutputSetComponent, dialogConfig);
         dialogRef.afterClosed().subscribe(
-          data => (data) 
+          data => (data)
             ? (() => {
               this.outputSets.splice(index, 1, data);
               this.openSnackBar("Output Set: \""+this.outputSets[index].setName+"\" edited!", "successful-snackbar");
@@ -311,11 +311,46 @@ export class AppComponent implements OnInit {
   }
 
   openSnackBar(msg, bg) {
-    this.snackBar.openFromComponent(SnackBarComponent, 
+    this.snackBar.openFromComponent(SnackBarComponent,
       {
         duration: 2000,
         panelClass: [bg],
         data: msg
       });
   }
+
+  exportFile(){
+    exportFilej(this.outputSets, this.levelSets, this.variableSets, this.gridSets, this.timeSets);
+  }
+
+//old
+  // addOutputSet(levelSet, variableSet, gridSet, timeSet) {
+  //   if (levelSet && variableSet && gridSet && timeSet) {
+  //     let temp = [[levelSet, variableSet, gridSet, timeSet]]
+  //     //duplicate made in proper order for export
+  //     let tempnamesave = [[gridSet.setName,timeSet.setName,variableSet.setName,levelSet.setName]]
+  //     for (let i = 0; i < this.outputSets.length; i++) {
+  //       temp.push(this.outputSets[i]);
+  //       //duplicate pushed
+  //       tempnamesave.push(this.outputName[i])
+  //     }
+  //     this.outputSets = temp
+  //     //openSuccessfulOutputSetCreation()
+  //     //duplicate saved
+  //     this.outputName = tempnamesave;
+  //   } else {
+  //     this.openErrorSnackBar("At least 1 set from each box is required to make an output set!");
+  //   }
+  // }
+
+
+  // deleteOutputSet(index) {
+  //   this.outputSets.splice(index, 1);
+  //   this.outputName.splice(index,1);
+  // }
+  //DeleteInputSet(index) after a "are you sure" dialog
+
+  /*
+  are
+  */
 }
