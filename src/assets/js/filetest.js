@@ -120,7 +120,7 @@ function exportFilej(sets, levelSets, variableSets, gridSets, timeSets){
     var variableData =  exportVars(variableSets)
     var output = exportOutput(sets);
     var test = leveldata + timeData + gridData + variableData + output;
-    alert(test);
+    //alert(test);
     
     const originalData = test;
     var a = document.createElement("a");
