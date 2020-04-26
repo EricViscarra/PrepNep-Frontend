@@ -9,44 +9,118 @@
 //     document.body.removeChild(a);
 // }
 
-function exportData(sets){
+function exportLevels(set){
+    //alert(JSON.stringify(set[2]))
     var test = "";
-    return test;
-}
-function exportOutput(setNames){
-    var test = "";
-    for(var i = 0; i < setNames.length; i++){
-        var temp = JSON.stringify(setNames[i])
-        var count = 3;
-        var t = "";
-        for(ii = 0; ii < temp.length+1; ii++){
-            if(temp[ii] == "]"){
-                temp = temp.substring(0,ii) + "" + temp.substring(ii+1);
-                //for removing "]", it didn't delete otherwise.
-                temp = temp.substring(0, temp.length - 1);  
-            }
-            if(temp[ii] == '"'){
-                temp = temp.substring(0,ii) + "" + temp.substring(ii+1);
-            }
-            if(temp[ii] == ","){
-                if(count == 3) t = "- time_set: "
-                else if(count == 2) t = "- var_set: "
-                else if(count == 1) t = "- level_set: "
-                temp = temp.substring(0,ii) + "]\n" + t +"[" + temp.substring(ii+1);
-                count-=1;
-                //alert(temp);
-            }
+    for(var i = 0; i < set.length; i++){
+        var temp = JSON.stringify(set[i]["setName"])
+        temp += ":\n - record_type: "  + JSON.stringify(set[i]["recordType"])
+        temp += "\n - interval type: " + JSON.stringify(set[i]["intervalType"])
+        if(JSON.stringify(set[i]["recordType"]) == JSON.stringify("pressure")){
+            temp += "\n - pressures: " + JSON.stringify(set[i]["pressures"])
         }
-        test += "\n\n" +  "output" + i + ":\n" + "- record_type: Outstream \n- grid_set: " + temp;
+        if(JSON.stringify(set[i]["recordType"]) == JSON.stringify("height")){
+            temp += "\n - start: " + JSON.stringify(set[i]["start"])
+            temp += "\n - step: "  + JSON.stringify(set[i]["step"])
+            temp += "\n - last: "  + JSON.stringify(set[i]["last"])
+        }
+        test += temp + "\n \n";
+    }
+    for(var i = 0; i < test.length; i++){
+        if(test[i] == '"'){
+            test = test.substring(0,i) + "" + test.substring(i+1);
+        }
+        else if(test[i] == ','){
+            test = test.substring(0,i) + " " + test.substring(i+1);
+        }
     }
     return test;
 }
 
-function exportFilej(setNames,sets){
-    alert(JSON.stringify(setNames[1]))
-    var data = exportData(sets);
-    var output = exportOutput(setNames);
-    var test = data + output;
+function exportTime(set){
+    var test = ""
+    for(var i = 0; i < set.length; i++){
+        var temp = JSON.stringify(set[i]["setName"])
+        temp += ":\n - record_type: "  + JSON.stringify(set[i]["recordType"])
+        temp += "\n - interval type: " + JSON.stringify(set[i]["intervalType"])
+        temp += "\n - start: "         + JSON.stringify(set[i]["start"])
+        temp += "\n - step: "          + JSON.stringify(set[i]["step"])
+        temp += "\n - last: "          + JSON.stringify(set[i]["last"])
+        temp += "\n - timescale: "     + JSON.stringify(set[i]["timescale"])
+        test += temp + "\n \n"
+    }
+    for(var i = 0; i < test.length; i++){
+        if(test[i] == '"'){
+            test = test.substring(0,i) + "" + test.substring(i+1);
+        }
+    }
+    return test;
+}
+
+function exportGrid(set){
+    var test = ""
+    for(var i = 0; i < set.length; i++){
+        var temp = JSON.stringify(set[i]["setName"])
+        temp += ":\n - record_type: " + JSON.stringify(set[i]["recordType"])
+        temp += "\n - grid_type: "   + JSON.stringify(set[i]["gridType"])
+        temp += "\n - spacing: "     + JSON.stringify(set[i]["spacing"])
+        test +=  temp + "\n \n"
+    }
+    for(var i = 0; i < test.length; i++){
+        if(test[i] == '"'){
+            test = test.substring(0,i) + "" + test.substring(i+1);
+        }
+    }
+    return test;
+}
+
+function exportVars(set){
+    var test = ""
+    for(var i = 0; i < set.length; i++){
+        var temp = JSON.stringify(set[i]["setName"])
+        temp += ":\n - record_type: " + JSON.stringify(set[i]["recordType"])
+        temp += "\n - variables: "    + JSON.stringify(set[i]["variables"])
+        test +=  temp + "\n \n"
+    }
+    for(var i = 0; i < test.length; i++){
+        if(test[i] == '"'){
+            test = test.substring(0,i) + "" + test.substring(i+1);
+        }
+        if(test[i] == ','){
+            test = test.substring(0,i) + " " + test.substring(i+1);
+        }
+    }
+    return test;
+}
+
+function exportOutput(setNames){
+    var test = "";
+    for(var i = 0; i < setNames.length; i++){
+        var temp = JSON.stringify(setNames[i]["setName"])
+        temp += ":\n - record_type: "  + JSON.stringify(setNames[i]["recordType"]) 
+        temp += "\n - grid_set: ["    + JSON.stringify(setNames[i]["gridSet"]["setName"])
+        temp += "] \n - time_set: [" + JSON.stringify(setNames[i]["timeSet"]["setName"])
+        temp += "] \n - var_set: "    + JSON.stringify(setNames[i]["variableSet"]["setName"])
+        temp += "\n - level_set: ["   + JSON.stringify(setNames[i]["levelSet"]["setName"]) + " ] \n \n"
+        test += temp;
+        }
+        for(var i = 0; i < test.length; i++){
+            if(test[i] == '"'){
+                test = test.substring(0,i) + "" + test.substring(i+1);
+            }
+        }
+        return test;
+    }
+
+function exportFilej(sets, levelSets, variableSets, gridSets, timeSets){
+    //alert(JSON.stringify(setNames[0]["levelSet"]["setName"]))
+    var leveldata = exportLevels(levelSets);
+    var timeData =  exportTime(timeSets);
+    var gridData =  exportGrid(gridSets);
+    var variableData =  exportVars(variableSets)
+    var output = exportOutput(sets);
+    var test = leveldata + timeData + gridData + variableData + output;
+    alert(test);
     
     const originalData = test;
     var a = document.createElement("a");

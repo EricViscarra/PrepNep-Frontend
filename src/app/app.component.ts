@@ -14,7 +14,7 @@ import { LevelSet } from './classes/levelSet';
 import { VariableSet } from './classes/variableSet';
 import { GridSet } from './classes/gridSet';
 import { TimeSet } from './classes/timeSet';
-declare function exportFilej(setNames, sets): any;
+declare function exportFilej(sets, levelset, variablesets, gridsets, timesets): any;
 import { OutputSet } from './classes/outputSet';
 @Component({
   selector: 'app-root',
@@ -99,7 +99,6 @@ export class AppComponent implements OnInit {
   gridSets : GridSet[] = [];
   timeSets : TimeSet[] = [];
   outputSets : OutputSet[] = [];
-  outputName : String[][] = [];
 
   createSet(setType) {
     const dialogConfig = new MatDialogConfig();
@@ -319,34 +318,36 @@ export class AppComponent implements OnInit {
         data: msg
       });
   }
-//old
-  addOutputSet(levelSet, variableSet, gridSet, timeSet) {
-    if (levelSet && variableSet && gridSet && timeSet) {
-      let temp = [[levelSet, variableSet, gridSet, timeSet]]
-      //duplicate made in proper order for export
-      let tempnamesave = [[gridSet.setName,timeSet.setName,variableSet.setName,levelSet.setName]]
-      for (let i = 0; i < this.outputSets.length; i++) {
-        temp.push(this.outputSets[i]);
-        //duplicate pushed
-        tempnamesave.push(this.outputName[i])
-      }
-      this.outputSets = temp
-      //openSuccessfulOutputSetCreation()
-      //duplicate saved
-      this.outputName = tempnamesave;
-    } else {
-      this.openErrorSnackBar("At least 1 set from each box is required to make an output set!");
-    }
-  }
 
   exportFile(){
-    exportFilej(this.outputName, this.outputSets);
+    exportFilej(this.outputSets, this.levelSets, this.variableSets, this.gridSets, this.timeSets);
   }
 
-  deleteOutputSet(index) {
-    this.outputSets.splice(index, 1);
-    this.outputName.splice(index,1);
-  }
+//old
+  // addOutputSet(levelSet, variableSet, gridSet, timeSet) {
+  //   if (levelSet && variableSet && gridSet && timeSet) {
+  //     let temp = [[levelSet, variableSet, gridSet, timeSet]]
+  //     //duplicate made in proper order for export
+  //     let tempnamesave = [[gridSet.setName,timeSet.setName,variableSet.setName,levelSet.setName]]
+  //     for (let i = 0; i < this.outputSets.length; i++) {
+  //       temp.push(this.outputSets[i]);
+  //       //duplicate pushed
+  //       tempnamesave.push(this.outputName[i])
+  //     }
+  //     this.outputSets = temp
+  //     //openSuccessfulOutputSetCreation()
+  //     //duplicate saved
+  //     this.outputName = tempnamesave;
+  //   } else {
+  //     this.openErrorSnackBar("At least 1 set from each box is required to make an output set!");
+  //   }
+  // }
+
+
+  // deleteOutputSet(index) {
+  //   this.outputSets.splice(index, 1);
+  //   this.outputName.splice(index,1);
+  // }
   //DeleteInputSet(index) after a "are you sure" dialog
 
   /*
