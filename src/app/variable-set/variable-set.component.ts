@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar, } from '@angular/material';
-import { ErrorSnackBarComponent } from '../error-snack-bar/error-snack-bar.component'
+import { SnackBarComponent } from '../snack-bar/snack-bar.component'
 import { VariableSet } from '../classes/variableSet';
 
 
@@ -17,6 +17,7 @@ export class VariableSetComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any) {
       this.variableSet = data.variableSet;
       if (data.variableSet.variables) {
+        this.variableSet.variables = data.nonRefArr;
         this.numVariables = this.variableSet.variables.length;
       } else {
         this.variableSet.variables = [];
@@ -42,13 +43,14 @@ export class VariableSetComponent implements OnInit {
   }
 
   onSubmit() {
-    var validVariables = (this.numVariables == this.variableSet.variables.length) && !this.variableSet.variables.includes(undefined);
+    var validVariables = (this.numVariables == this.variableSet.variables.length) && 
+      !this.variableSet.variables.includes(undefined) && !this.variableSet.variables.includes("");
     if (this.variableSet.setName && 
       this.variableSet.recordType &&
       validVariables) {
       this.dialogRef.close(this.variableSet);
     } else {
-      this.openErrorSnackBar("Fill out all of the required fields! *");
+      this.openSnackBar("Fill out all of the required fields! *", "error-snackbar");
     }
   } 
 
@@ -56,11 +58,11 @@ export class VariableSetComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  openErrorSnackBar(msg) {
-    this.snackBar.openFromComponent(ErrorSnackBarComponent, 
+  openSnackBar(msg, bg) {
+    this.snackBar.openFromComponent(SnackBarComponent, 
       {
-        duration: 4000,
-        panelClass: ['error-snackbar'],
+        duration: 2000,
+        panelClass: [bg],
         data: msg
       });
   }

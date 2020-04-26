@@ -58,18 +58,18 @@
           <mat-radio-button class="example-radio-button" *ngFor="let levelSet of levelSets, let i = index" [value]="levelSet">
             {{levelSet.setName}}
             &nbsp;
-            <button mat-mini-fab color="basic" (click)="editInputSet('Level', i)">
+            <button mat-mini-fab color="basic" (click)="editSet('Level', i)">
               <mat-icon>edit</mat-icon>
             </button>
             &nbsp;
-            <button mat-mini-fab color="warn" (click)="deleteInputSet('Level', i)">
+            <button mat-mini-fab color="warn" (click)="deleteSet('Level', i)">
               <mat-icon>delete</mat-icon>
             </button>
           </mat-radio-button>
         </mat-radio-group>
       </div>
       <div class = "Button-holder">
-        <button class = "LimiterButton" mat-raised-button color="accent" (click)="createInputSet('Level')">
+        <button class = "LimiterButton" mat-raised-button color="accent" (click)="createSet('Level')">
           Create Level Set
         </button>
       </div>
@@ -84,18 +84,18 @@
           <mat-radio-button class="example-radio-button" *ngFor="let variableSet of variableSets, let i = index" [value]="variableSet">
             {{variableSet.setName}}
             &nbsp;
-            <button mat-mini-fab color="basic" (click)="editInputSet('Variable', i)">
+            <button mat-mini-fab color="basic" (click)="editSet('Variable', i)">
               <mat-icon>edit</mat-icon>
             </button>
             &nbsp;
-            <button mat-mini-fab color="warn" (click)="deleteInputSet('Variable', i)">
+            <button mat-mini-fab color="warn" (click)="deleteSet('Variable', i)">
               <mat-icon>delete</mat-icon>
             </button>
           </mat-radio-button>
         </mat-radio-group>
       </div>
       <div class = "Button-holder">
-        <button class = "LimiterButton" mat-raised-button color="accent" (click)="createInputSet('Variable')">
+        <button class = "LimiterButton" mat-raised-button color="accent" (click)="createSet('Variable')">
           Create Variable Set
         </button>
       </div>
@@ -110,18 +110,18 @@
           <mat-radio-button class="example-radio-button" *ngFor="let gridSet of gridSets, let i = index" [value]="gridSet">
             {{gridSet.setName}}
             &nbsp;
-            <button mat-mini-fab color="basic" (click)="editInputSet('Grid', i)">
+            <button mat-mini-fab color="basic" (click)="editSet('Grid', i)">
               <mat-icon>edit</mat-icon>
             </button>
             &nbsp;
-            <button mat-mini-fab color="warn" (click)="deleteInputSet('Grid', i)">
+            <button mat-mini-fab color="warn" (click)="deleteSet('Grid', i)">
               <mat-icon>delete</mat-icon>
             </button>
           </mat-radio-button>
         </mat-radio-group>
       </div>
       <div class = "Button-holder">
-        <button class = "LimiterButton" mat-raised-button color="accent" (click)="createInputSet('Grid')">
+        <button class = "LimiterButton" mat-raised-button color="accent" (click)="createSet('Grid')">
           Create Grid Set
         </button>
       </div>
@@ -136,18 +136,18 @@
           <mat-radio-button class="example-radio-button" *ngFor="let timeSet of timeSets, let i = index" [value]="timeSet">
             {{timeSet.setName}}
             &nbsp;
-            <button mat-mini-fab color="basic" (click)="editInputSet('Time', i)">
+            <button mat-mini-fab color="basic" (click)="editSet('Time', i)">
               <mat-icon>edit</mat-icon>
             </button>
             &nbsp;
-            <button mat-mini-fab color="warn" (click)="deleteInputSet('Time', i)">
+            <button mat-mini-fab color="warn" (click)="deleteSet('Time', i)">
               <mat-icon>delete</mat-icon>
             </button>
           </mat-radio-button>
         </mat-radio-group>
       </div>
       <div class = "Button-holder">
-        <button class = "LimiterButton" mat-raised-button color="accent" (click)="createInputSet('Time')">
+        <button class = "LimiterButton" mat-raised-button color="accent" (click)="createSet('Time')">
           Create Time Set
         </button>
       </div>
@@ -155,7 +155,7 @@
   </div>
 
   <div id="btn_wrapper">
-    <button mat-raised-button color="primary" (click)="addOutputSet(pickedLevelSet, pickedVariableSet, pickedGridSet, pickedTimeSet)">Create Output Set</button>
+    <button mat-raised-button color="primary" (click)="createSet('Output')">Create Output Set</button>
     <button mat-raised-button color="primary" id = "Createfile" (click)="exportFile()">Download</button>
   </div>
   <br/>
@@ -165,21 +165,31 @@
       <div class="scrollmenu">
         <table>
           <tr>
-            <th> </th>
-            <td> Level </td>
-            <td> Variable </td>
-            <td> Grid </td>
-            <td> Time </td>
-            <td> Delete </td>
+            <td class="small"> </td>
+            <td class="large"> Name </td>
+            <td class="large"> Level </td>
+            <td class="large"> Variable </td>
+            <td class="large"> Grid </td>
+            <td class="large"> Time </td>
+            <td class="small"> Edit </td>
+            <td class="small"> Delete </td>
           </tr>
           <tr *ngFor="let outputSet of outputSets; let i = index">
             <td> {{ outputSets.length - i }} </td>
-            <td> {{outputSet[0].setName }} </td>
-            <td> {{outputSet[1].setName }} </td>
-            <td> {{outputSet[2].setName }} </td>
-            <td> {{outputSet[3].setName }} </td>
+            <td> {{ outputSet.setName }} </td>
+            <td> {{ outputSet.levelSet.setName }} </td>
+            <td> {{ outputSet.variableSet.setName }} </td>
+            <td> {{ outputSet.gridSet.setName }} </td>
+            <td> {{ outputSet.timeSet.setName }} </td>
             <td>
-              <button mat-raised-button color="warn" (click)="deleteOutputSet(i)">Delete</button>
+              <button mat-raised-button color="basic" (click)="editSet('Output', i)">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+            <td>
+              <button mat-raised-button color="warn" (click)="deleteSet('Output', i)">
+                <mat-icon>delete</mat-icon>
+              </button>
             </td>
           </tr>
         </table>

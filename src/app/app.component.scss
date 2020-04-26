@@ -85,8 +85,21 @@ table, th, td {
   border-collapse: collapse;
 }
 
+td {
+  overflow: auto;
+}
+
 table {
   width: 100%;
+  table-layout: fixed;
+}
+
+.small {
+  width: 6%;
+}
+
+.large {
+  width: 14%;
 }
 
 span {

@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar, } from '@angular/material';
-import { ErrorSnackBarComponent } from '../error-snack-bar/error-snack-bar.component'
+import { SnackBarComponent } from '../snack-bar/snack-bar.component'
 import { TimeSet } from '../classes/timeSet';
 
 @Component({
@@ -28,13 +28,14 @@ export class TimeSetComponent implements OnInit {
     if (this.timeSet.setName && 
       this.timeSet.recordType && 
       this.timeSet.intervalType &&
-      this.timeSet.start &&
-      this.timeSet.step &&
-      this.timeSet.last &&
-      this.timeSet.timescale) {
+      (this.timeSet.start || this.timeSet.start == 0) &&
+      (this.timeSet.step || this.timeSet.step == 0) &&
+      (this.timeSet.last || this.timeSet.last == 0) &&
+      (this.timeSet.timescale || this.timeSet.timescale == 0)) {
       this.dialogRef.close(this.timeSet);
     } else {
-      this.openErrorSnackBar("Fill out all of the required fields! *");
+      console.log(this.timeSet);
+      this.openSnackBar("Fill out all of the required fields! *", "error-snackbar");
     }
   } 
 
@@ -42,11 +43,11 @@ export class TimeSetComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  openErrorSnackBar(msg) {
-    this.snackBar.openFromComponent(ErrorSnackBarComponent, 
+  openSnackBar(msg, bg) {
+    this.snackBar.openFromComponent(SnackBarComponent, 
       {
-        duration: 4000,
-        panelClass: ['error-snackbar'],
+        duration: 2000,
+        panelClass: [bg],
         data: msg
       });
   }
