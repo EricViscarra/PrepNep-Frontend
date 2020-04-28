@@ -22,6 +22,7 @@ import { VariableSetComponent } from './variable-set/variable-set.component';
 import { GridSetComponent } from './grid-set/grid-set.component';
 import { TimeSetComponent } from './time-set/time-set.component';
 import { OutputSetComponent } from './output-set/output-set.component';
+import { ConfirmationComponent } from './confirmation/confirmation.component';
 
 
 
@@ -33,7 +34,8 @@ import { OutputSetComponent } from './output-set/output-set.component';
     VariableSetComponent,
     TimeSetComponent,
     GridSetComponent,
-    OutputSetComponent
+    OutputSetComponent,
+    ConfirmationComponent
   ],
   entryComponents: [
     SnackBarComponent,
@@ -41,7 +43,8 @@ import { OutputSetComponent } from './output-set/output-set.component';
     TimeSetComponent,
     VariableSetComponent,
     GridSetComponent,
-    OutputSetComponent
+    OutputSetComponent,
+    ConfirmationComponent
   ],
   imports: [
     BrowserModule,

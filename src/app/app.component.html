@@ -176,18 +176,18 @@
           </tr>
           <tr *ngFor="let outputSet of outputSets; let i = index">
             <td> {{ outputSets.length - i }} </td>
-            <td> {{ outputSet.setName }} </td>
-            <td> {{ outputSet.levelSet.setName }} </td>
-            <td> {{ outputSet.variableSet.setName }} </td>
-            <td> {{ outputSet.gridSet.setName }} </td>
-            <td> {{ outputSet.timeSet.setName }} </td>
+            <td> {{ outputSets[outputSets.length-1-i].setName }} </td>
+            <td> {{ outputSets[outputSets.length-1-i].levelSet.setName }} </td>
+            <td> {{ outputSets[outputSets.length-1-i].variableSet.setName }} </td>
+            <td> {{ outputSets[outputSets.length-1-i].gridSet.setName }} </td>
+            <td> {{ outputSets[outputSets.length-1-i].timeSet.setName }} </td>
             <td>
-              <button mat-raised-button color="basic" (click)="editSet('Output', i)">
+              <button mat-raised-button color="basic" (click)="editSet('Output', outputSets.length-1-i)">
                 <mat-icon>edit</mat-icon>
               </button>
             </td>
             <td>
-              <button mat-raised-button color="warn" (click)="deleteSet('Output', i)">
+              <button mat-raised-button color="warn" (click)="deleteSet('Output', outputSets.length-1-i)">
                 <mat-icon>delete</mat-icon>
               </button>
             </td>
