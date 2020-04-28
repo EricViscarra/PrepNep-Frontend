@@ -10,6 +10,7 @@ import { VariableSetComponent } from './variable-set/variable-set.component';
 import { GridSetComponent } from './grid-set/grid-set.component';
 import { TimeSetComponent } from './time-set/time-set.component';
 import { OutputSetComponent } from './output-set/output-set.component';
+import { ConfirmationComponent } from './confirmation/confirmation.component';
 import { LevelSet } from './classes/levelSet';
 import { VariableSet } from './classes/variableSet';
 import { GridSet } from './classes/gridSet';
@@ -24,6 +25,7 @@ import { OutputSet } from './classes/outputSet';
 export class AppComponent implements OnInit {
 
   ngOnInit() {
+    //Testing Sets
     var ls1 = new LevelSet();
     ls1.setName = "Level Set 1";
     ls1.recordType = "pressure";
@@ -116,7 +118,7 @@ export class AppComponent implements OnInit {
         data => (data)
             ? (() => {
               this.levelSets.push(data);
-              this.openSnackBar("Level Set: \""+data.setName+"\" created!", "successful-snackbar");
+              this.openSnackBar("Level Set: " + data.setName + " created!", "successful-snackbar");
              })()
             : console.log("Form cancelled.")
       );
@@ -130,7 +132,7 @@ export class AppComponent implements OnInit {
         data => (data)
             ? (() => {
               this.variableSets.push(data);
-              this.openSnackBar("Variable Set: \""+data.setName+"\" created!", "successful-snackbar");
+              this.openSnackBar("Variable Set: " + data.setName + " created!", "successful-snackbar");
              })()
             : console.log("Form cancelled.")
       );
@@ -144,7 +146,7 @@ export class AppComponent implements OnInit {
         data => (data)
             ? (() => {
               this.gridSets.push(data);
-              this.openSnackBar("Grid Set: \""+data.setName+"\" created!", "successful-snackbar");
+              this.openSnackBar("Grid Set: " + data.setName + " created!", "successful-snackbar");
              })()
             : console.log("Form cancelled.")
       );
@@ -158,7 +160,7 @@ export class AppComponent implements OnInit {
         data => (data)
             ? (() => {
               this.timeSets.push(data);
-              this.openSnackBar("Time Set: \""+data.setName+"\" created!", "successful-snackbar");
+              this.openSnackBar("Time Set: " + data.setName + " created!", "successful-snackbar");
              })()
             : console.log("Form cancelled.")
       );
@@ -184,7 +186,8 @@ export class AppComponent implements OnInit {
           data => (data)
             ? (() => {
               this.outputSets.push(data);
-              this.openSnackBar("Output Set: \""+data.setName+"\" created!", "successful-snackbar");
+              console.log(this.outputSets);
+              this.openSnackBar("Output Set: " + data.setName + " created!", "successful-snackbar");
              })()
             : console.log("Form cancelled.")
         );
@@ -219,7 +222,7 @@ export class AppComponent implements OnInit {
         data => (data)
             ? (() => {
               this.levelSets.splice(index, 1, data);
-              this.openSnackBar("Level Set: \""+this.levelSets[index].setName+"\" edited!", "successful-snackbar");
+              this.openSnackBar("Level Set: " + this.levelSets[index].setName + " edited!", "successful-snackbar");
              })()
             : console.log("Form cancelled.")
       );
@@ -234,7 +237,7 @@ export class AppComponent implements OnInit {
         data => (data)
             ? (() => {
               this.variableSets.splice(index, 1, data);
-              this.openSnackBar("Variable Set: \""+this.variableSets[index].setName+"\" edited!", "successful-snackbar");
+              this.openSnackBar("Variable Set: " + this.variableSets[index].setName + " edited!", "successful-snackbar");
              })()
             : console.log("Form cancelled.")
       );
@@ -248,7 +251,7 @@ export class AppComponent implements OnInit {
         data => (data)
             ? (() => {
               this.gridSets.splice(index, 1, data);
-              this.openSnackBar("Grid Set: \""+this.gridSets[index].setName+"\" edited!", "successful-snackbar");
+              this.openSnackBar("Grid Set: " + this.gridSets[index].setName + " edited!", "successful-snackbar");
              })()
             : console.log("Form cancelled.")
       );
@@ -262,7 +265,7 @@ export class AppComponent implements OnInit {
         data => (data)
             ? (() => {
               this.timeSets.splice(index, 1, data);
-              this.openSnackBar("Time Set: \""+this.timeSets[index].setName+"\" edited!", "successful-snackbar");
+              this.openSnackBar("Time Set: " + this.timeSets[index].setName + " edited!", "successful-snackbar");
              })()
             : console.log("Form cancelled.")
       );
@@ -280,7 +283,7 @@ export class AppComponent implements OnInit {
           data => (data)
             ? (() => {
               this.outputSets.splice(index, 1, data);
-              this.openSnackBar("Output Set: \""+this.outputSets[index].setName+"\" edited!", "successful-snackbar");
+              this.openSnackBar("Output Set: " + this.outputSets[index].setName + " edited!", "successful-snackbar");
              })()
             : console.log("Form cancelled.")
         );
@@ -290,20 +293,170 @@ export class AppComponent implements OnInit {
   }
 
   deleteSet(setType, index) {
+    var outputSet;
+    var affectedOutputSets = [];
+    var affectedOutputSetNames = [];
+    const dialogConfig = new MatDialogConfig();
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
     if (setType == "Level") {
-      this.openSnackBar("Level Set: \""+this.levelSets[index].setName+"\" deleted!", "error-snackbar");
-      this.levelSets.splice(index, 1);
+      for (outputSet of this.outputSets) {
+        if (this.levelSets[index] === outputSet.levelSet) {
+          affectedOutputSets.push(outputSet);
+          affectedOutputSetNames.push(outputSet.setName);
+        }
+      }
+      if (affectedOutputSets.length > 0) {
+        var content = "These output sets:<br><strong>" + affectedOutputSetNames.toString().replace(/,/g, ', ') +
+        "</strong><br>are using the set you are trying to delete.<br>If you delete this set the output sets will be deleted as well.<br>" +
+        "If you want to delete this set but not the output sets, then click the<br>'Cancel' button and edit the output sets "+
+        "so they no longer use this set. <br>If you would still like to continue then click 'Continue Deletion'";
+        var confirmButtonText = "Continue Deletion";
+        var cancelButtonText = "Cancel";
+        dialogConfig.data = {
+          content: content,
+          confirmButtonText: confirmButtonText,
+          cancelButtonText: cancelButtonText,
+        }
+        const dialogRef = this.dialog.open(ConfirmationComponent, dialogConfig);
+        dialogRef.afterClosed().subscribe(
+          data => (data)
+              ? (() => {
+                this.openSnackBar("Level Set: " + this.levelSets[index].setName + " and Output Set(s): " + 
+                affectedOutputSets.toString().replace(/,/g, ', ') + " deleted!", "error-snackbar");
+                this.levelSets.splice(index, 1);
+                for (outputSet of affectedOutputSets) {
+                  console.log(this.outputSets);
+                  console.log(outputSet);
+                  console.log(this.outputSets.indexOf(outputSet));
+                  this.outputSets.splice(this.outputSets.indexOf(outputSet), 1);
+                }
+               })()
+              : console.log("Form cancelled.")
+        );
+      } else {
+        this.openSnackBar("Level Set: " + this.levelSets[index].setName + " deleted!", "error-snackbar");
+        this.levelSets.splice(index, 1);
+      }
     } else if (setType =="Variable") {
-      this.openSnackBar("Variable Set: \""+this.variableSets[index].setName+"\" deleted!", "error-snackbar");
-      this.variableSets.splice(index, 1);
+      for (outputSet of this.outputSets) {
+        if (this.variableSets[index] === outputSet.variableSet) {
+          affectedOutputSets.push(outputSet);
+          affectedOutputSetNames.push(outputSet.setName);
+        }
+      }
+      if (affectedOutputSets.length > 0) {
+        var content = "These output sets:<br><strong>" + affectedOutputSetNames.toString().replace(/,/g, ', ') +
+        "</strong><br>are using the set you are trying to delete.<br>If you delete this set the output sets will be deleted as well.<br>" +
+        "If you want to delete this set but not the output sets, then click the<br>'Cancel' button and edit the output sets "+
+        "so they no longer use this set. <br>If you would still like to continue then click 'Continue Deletion'";
+        var confirmButtonText = "Continue Deletion";
+        var cancelButtonText = "Cancel";
+        dialogConfig.data = {
+          content: content,
+          confirmButtonText: confirmButtonText,
+          cancelButtonText: cancelButtonText,
+        }
+        const dialogRef = this.dialog.open(ConfirmationComponent, dialogConfig);
+        dialogRef.afterClosed().subscribe(
+          data => (data)
+              ? (() => {
+                this.openSnackBar("Variable Set: " + this.variableSets[index].setName + " and Output Set(s): " + 
+                affectedOutputSets.toString().replace(/,/g, ', ') + " deleted!", "error-snackbar");
+                this.variableSets.splice(index, 1);
+                for (outputSet of affectedOutputSets) {
+                  console.log(this.outputSets);
+                  console.log(outputSet);
+                  console.log(this.outputSets.indexOf(outputSet));
+                  this.outputSets.splice(this.outputSets.indexOf(outputSet), 1);
+                }
+               })()
+              : console.log("Form cancelled.")
+        );
+      } else {
+        this.openSnackBar("Variable Set: " + this.variableSets[index].setName + " deleted!", "error-snackbar");
+        this.variableSets.splice(index, 1);
+      }
     } else if (setType == "Grid") {
-      this.openSnackBar("Grid Set: \""+this.gridSets[index].setName+"\" deleted!", "error-snackbar");
-      this.gridSets.splice(index, 1);
+      for (outputSet of this.outputSets) {
+        if (this.gridSets[index] === outputSet.gridSet) {
+          affectedOutputSets.push(outputSet);
+          affectedOutputSetNames.push(outputSet.setName);
+        }
+      }
+      if (affectedOutputSets.length > 0) {
+        var content = "These output sets:<br><strong>" + affectedOutputSetNames.toString().replace(/,/g, ', ') +
+        "</strong><br>are using the set you are trying to delete.<br>If you delete this set the output sets will be deleted as well.<br>" +
+        "If you want to delete this set but not the output sets, then click the<br>'Cancel' button and edit the output sets "+
+        "so they no longer use this set. <br>If you would still like to continue then click 'Continue Deletion'";
+        var confirmButtonText = "Continue Deletion";
+        var cancelButtonText = "Cancel";
+        dialogConfig.data = {
+          content: content,
+          confirmButtonText: confirmButtonText,
+          cancelButtonText: cancelButtonText,
+        }
+        const dialogRef = this.dialog.open(ConfirmationComponent, dialogConfig);
+        dialogRef.afterClosed().subscribe(
+          data => (data)
+              ? (() => {
+                this.openSnackBar("Grid Set: " + this.gridSets[index].setName + " and Output Set(s): " + 
+                affectedOutputSets.toString().replace(/,/g, ', ') + " deleted!", "error-snackbar");
+                this.gridSets.splice(index, 1);
+                for (outputSet of affectedOutputSets) {
+                  console.log(this.outputSets);
+                  console.log(outputSet);
+                  console.log(this.outputSets.indexOf(outputSet));
+                  this.outputSets.splice(this.outputSets.indexOf(outputSet), 1);
+                }
+               })()
+              : console.log("Form cancelled.")
+        );
+      } else {
+        this.openSnackBar("Grid Set: " + this.gridSets[index].setName + " deleted!", "error-snackbar");
+        this.gridSets.splice(index, 1);
+      }
     } else if (setType == "Time") {
-      this.openSnackBar("Time Set: \""+this.timeSets[index].setName+"\" deleted!", "error-snackbar");
-      this.timeSets.splice(index, 1);
+      for (outputSet of this.outputSets) {
+        if (this.timeSets[index] === outputSet.timeSet) {
+          affectedOutputSets.push(outputSet);
+          affectedOutputSetNames.push(outputSet.setName);
+        }
+      }
+      if (affectedOutputSets.length > 0) {
+        var content = "These output sets:<br><strong>" + affectedOutputSetNames.toString().replace(/,/g, ', ') +
+        "</strong><br>are using the set you are trying to delete.<br>If you delete this set the output sets will be deleted as well.<br>" +
+        "If you want to delete this set but not the output sets, then click the<br>'Cancel' button and edit the output sets "+
+        "so they no longer use this set. <br>If you would still like to continue then click 'Continue Deletion'";
+        var confirmButtonText = "Continue Deletion";
+        var cancelButtonText = "Cancel";
+        dialogConfig.data = {
+          content: content,
+          confirmButtonText: confirmButtonText,
+          cancelButtonText: cancelButtonText,
+        }
+        const dialogRef = this.dialog.open(ConfirmationComponent, dialogConfig);
+        dialogRef.afterClosed().subscribe(
+          data => (data)
+              ? (() => {
+                this.openSnackBar("Time Set: " + this.timeSets[index].setName + " and Output Set(s): " + 
+                affectedOutputSets.toString().replace(/,/g, ', ') + " deleted!", "error-snackbar");
+                this.timeSets.splice(index, 1);
+                for (outputSet of affectedOutputSets) {
+                  console.log(this.outputSets);
+                  console.log(outputSet);
+                  console.log(this.outputSets.indexOf(outputSet));
+                  this.outputSets.splice(this.outputSets.indexOf(outputSet), 1);
+                }
+               })()
+              : console.log("Form cancelled.")
+        );
+      } else {
+        this.openSnackBar("Time Set: " + this.timeSets[index].setName + " deleted!", "error-snackbar");
+        this.timeSets.splice(index, 1);
+      }
     } else if (setType == "Output") {
-      this.openSnackBar("Output Set: \""+this.outputSets[index].setName+"\" deleted!", "error-snackbar");
+      this.openSnackBar("Output Set: " + this.outputSets[index].setName + " deleted!", "error-snackbar");
       this.outputSets.splice(index, 1);
     } else {
       console.log("That input set type does not exist!")
@@ -311,9 +464,18 @@ export class AppComponent implements OnInit {
   }
 
   openSnackBar(msg, bg) {
+    var dur;
+    if (bg == "error-snackbar") {
+       dur = 4000;
+    } else if (bg == "successful-snackbar") {
+      dur = 2000;
+    } else {
+      dur = 3000;
+    }
+
     this.snackBar.openFromComponent(SnackBarComponent,
       {
-        duration: 2000,
+        duration: dur,
         panelClass: [bg],
         data: msg
       });
