@@ -6,7 +6,7 @@
     </mat-form-field>
 
     <br/>
-
+    <!--
     <mat-form-field>
         <mat-label> Select Record Type </mat-label>
         <mat-select [(ngModel)]="timeSet.recordType" required>
@@ -24,7 +24,9 @@
     </mat-form-field>
 
     <br/>
+
     <ng-template [ngIf]="timeSet.recordType == 'time' && timeSet.intervalType == 'rule'">
+    -->
         <mat-form-field>
             <mat-label> Enter Start Value </mat-label>
             <input type="number" matInput [(ngModel)]="timeSet.start" required>
@@ -44,11 +46,10 @@
             <mat-label> Enter Timescale Value </mat-label>
             <input type="number" matInput [(ngModel)]="timeSet.timescale" required>
         </mat-form-field>
-        <br/>
-    </ng-template>
+    <!--</ng-template>-->
 
 <mat-dialog-actions>
     <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
 </mat-dialog-actions>

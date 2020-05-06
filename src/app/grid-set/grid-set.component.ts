@@ -25,10 +25,11 @@ export class GridSetComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit() {
-    if (this.gridSet.setName && 
-      this.gridSet.recordType && 
+    var valid = this.gridSet.setName &&
       this.gridSet.gridType &&
-      (this.gridSet.spacing || this.gridSet.spacing == 0)) {
+      (this.gridSet.spacing || this.gridSet.spacing == 0);
+    if (valid) {
+      this.gridSet.recordType == "grid";
       this.dialogRef.close(this.gridSet);
     } else {
       this.openSnackBar("Fill out all of the required fields! *", "error-snackbar");

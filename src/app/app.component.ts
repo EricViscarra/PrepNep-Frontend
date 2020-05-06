@@ -30,6 +30,9 @@ export class AppComponent implements OnInit {
     ls1.setName = "Level Set 1";
     ls1.recordType = "pressure";
     ls1.intervalType = "points";
+    ls1.start = 50;
+    ls1.step = 25;
+    ls1.last = 100;
     ls1.pressures = [100, 200, 300];
     this.levelSets.push(ls1);
     var ls2 = new LevelSet();

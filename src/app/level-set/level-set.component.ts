@@ -43,20 +43,23 @@ export class LevelSetComponent implements OnInit {
   }
 
   onSubmit() {
-    var valid;
-    if (this.levelSet.recordType == 'pressure' && this.levelSet.intervalType == 'points') {
-      valid = (this.numPressures == this.levelSet.pressures.length) && 
+    // Typescript converts 0 values to false on truth checks, hence the addition of == 0 checks
+    var valid = (this.levelSet.setName &&
+      (this.levelSet.start || this.levelSet.start == 0) && 
+      (this.levelSet.step || this.levelSet.step == 0) && 
+      (this.levelSet.last || this.levelSet.last == 0));
+    if (this.levelSet.recordType == 'pressure') {
+      valid = valid && ((this.numPressures == this.levelSet.pressures.length) && 
       !this.levelSet.pressures.includes(null) &&
-      !this.levelSet.pressures.includes(undefined);
-    } else if (this.levelSet.recordType == 'height' && this.levelSet.intervalType == 'rule') {
-      valid = ((this.levelSet.start || this.levelSet.start == 0) && 
-        (this.levelSet.step || this.levelSet.step == 0) && 
-        (this.levelSet.last || this.levelSet.last == 0));
-    } else {
-      valid = false;
-      console.log("Level set not correctly set.");
+      !this.levelSet.pressures.includes(undefined));
     }
-    if (this.levelSet.setName && valid) {
+    
+    if (valid) {
+      if (this.levelSet.recordType == "pressure") {
+        this.levelSet.intervalType = "points";
+      } else if (this.levelSet.recordType == "height") {
+        this.levelSet.intervalType = "rule";
+      }
       this.dialogRef.close(this.levelSet);
     } else {
       this.openSnackBar("Fill out all of the required fields! *", "error-snackbar");
