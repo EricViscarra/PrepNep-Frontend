@@ -25,13 +25,14 @@ export class TimeSetComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit() {
-    if (this.timeSet.setName && 
-      this.timeSet.recordType && 
-      this.timeSet.intervalType &&
+    var valid = this.timeSet.setName &&
       (this.timeSet.start || this.timeSet.start == 0) &&
       (this.timeSet.step || this.timeSet.step == 0) &&
       (this.timeSet.last || this.timeSet.last == 0) &&
-      (this.timeSet.timescale || this.timeSet.timescale == 0)) {
+      (this.timeSet.timescale || this.timeSet.timescale == 0);
+    if (valid) {
+      this.timeSet.recordType = "time";
+      this.timeSet.intervalType = "rule";
       this.dialogRef.close(this.timeSet);
     } else {
       console.log(this.timeSet);

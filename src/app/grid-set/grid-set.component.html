@@ -7,6 +7,7 @@
 
     <br/>
 
+    <!--
     <mat-form-field>
         <mat-label> Select Record Type </mat-label>
         <mat-select [(ngModel)]="gridSet.recordType" required>
@@ -15,6 +16,7 @@
     </mat-form-field>
 
     <br/>
+    -->
 
     <mat-form-field>
         <mat-label> Select Grid Type </mat-label>
@@ -25,7 +27,7 @@
 
     <br/>
 
-    <ng-template [ngIf]="gridSet.recordType == 'grid' && gridSet.gridType == 'latlon'">
+    <ng-template [ngIf]="gridSet.gridType == 'latlon'">
         <mat-form-field>
             <mat-label> Enter Spacing Value </mat-label>
             <input type="number" matInput [(ngModel)]="gridSet.spacing" required>

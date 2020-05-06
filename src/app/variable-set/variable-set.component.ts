@@ -43,11 +43,11 @@ export class VariableSetComponent implements OnInit {
   }
 
   onSubmit() {
-    var validVariables = (this.numVariables == this.variableSet.variables.length) && 
+    var valid = this.variableSet.setName &&
+      (this.numVariables == this.variableSet.variables.length) && 
       !this.variableSet.variables.includes(undefined) && !this.variableSet.variables.includes("");
-    if (this.variableSet.setName && 
-      this.variableSet.recordType &&
-      validVariables) {
+    if (valid) {
+      this.variableSet.recordType = "varset";
       this.dialogRef.close(this.variableSet);
     } else {
       this.openSnackBar("Fill out all of the required fields! *", "error-snackbar");
