@@ -15,7 +15,7 @@ import { LevelSet } from './classes/levelSet';
 import { VariableSet } from './classes/variableSet';
 import { GridSet } from './classes/gridSet';
 import { TimeSet } from './classes/timeSet';
-declare function exportFilej(sets, levelset, variablesets, gridsets, timesets): any;
+declare function exportFilej(sets, levelset, variablesets, gridsets, timesets, nelxy, nelz, nop, deltat, physics): any;
 import { OutputSet } from './classes/outputSet';
 @Component({
   selector: 'app-root',
@@ -30,9 +30,6 @@ export class AppComponent implements OnInit {
     ls1.setName = "Level Set 1";
     ls1.recordType = "pressure";
     ls1.intervalType = "points";
-    ls1.start = 50;
-    ls1.step = 25;
-    ls1.last = 100;
     ls1.pressures = [100, 200, 300];
     this.levelSets.push(ls1);
     var ls2 = new LevelSet();
@@ -189,7 +186,6 @@ export class AppComponent implements OnInit {
           data => (data)
             ? (() => {
               this.outputSets.push(data);
-              console.log(this.outputSets);
               this.openSnackBar("Output Set: " + data.setName + " created!", "successful-snackbar");
              })()
             : console.log("Form cancelled.")
@@ -485,37 +481,28 @@ export class AppComponent implements OnInit {
   }
 
   exportFile(){
-    exportFilej(this.outputSets, this.levelSets, this.variableSets, this.gridSets, this.timeSets);
+    var valid = 
+    (this.nel_xy || this.nel_xy == 0) && 
+    (this.nel_z || this.nel_z == 0) && 
+    (this.nop || this.nop == 0) && 
+    (this.delta_t || this.delta_t == 0) &&
+    this.physics &&
+    this.outputSets.length > 0;
+    if (valid) {
+      exportFilej(
+        this.outputSets, 
+        this.levelSets, 
+        this.variableSets, 
+        this.gridSets, 
+        this.timeSets, 
+        this.nel_xy, 
+        this.nel_z, 
+        this.nop, 
+        this.delta_t, 
+        this.physics
+      );
+    } else {
+      this.openSnackBar("Please fill in the Domain Setup and Physics sections and make at least 1 output set!", "error-snackbar");
+    }
   }
-
-//old
-  // addOutputSet(levelSet, variableSet, gridSet, timeSet) {
-  //   if (levelSet && variableSet && gridSet && timeSet) {
-  //     let temp = [[levelSet, variableSet, gridSet, timeSet]]
-  //     //duplicate made in proper order for export
-  //     let tempnamesave = [[gridSet.setName,timeSet.setName,variableSet.setName,levelSet.setName]]
-  //     for (let i = 0; i < this.outputSets.length; i++) {
-  //       temp.push(this.outputSets[i]);
-  //       //duplicate pushed
-  //       tempnamesave.push(this.outputName[i])
-  //     }
-  //     this.outputSets = temp
-  //     //openSuccessfulOutputSetCreation()
-  //     //duplicate saved
-  //     this.outputName = tempnamesave;
-  //   } else {
-  //     this.openErrorSnackBar("At least 1 set from each box is required to make an output set!");
-  //   }
-  // }
-
-
-  // deleteOutputSet(index) {
-  //   this.outputSets.splice(index, 1);
-  //   this.outputName.splice(index,1);
-  // }
-  //DeleteInputSet(index) after a "are you sure" dialog
-
-  /*
-  are
-  */
 }

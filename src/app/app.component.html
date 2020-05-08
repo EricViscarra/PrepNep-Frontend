@@ -5,13 +5,13 @@
       <h3>nop
         <mat-form-field>
           <mat-label> assign nop value </mat-label>
-          <input type="number" matInput [(ngModel)]="nop">
+          <input type="number" matInput [(ngModel)]="nop" required>
         </mat-form-field>
       </h3>
       <h3>nel [xy]
         <mat-form-field>
           <mat-label> assign nel [xy] value </mat-label>
-          <input type="number" matInput [(ngModel)]="nel_xy">
+          <input type="number" matInput [(ngModel)]="nel_xy" required>
         </mat-form-field>
       </h3>
     </div>
@@ -20,13 +20,13 @@
       <h3>	nel z
         <mat-form-field>
           <mat-label> assign nel z value </mat-label>
-          <input type="number" matInput [(ngModel)]="nel_z">
+          <input type="number" matInput [(ngModel)]="nel_z" required>
         </mat-form-field>
       </h3>
       <h3>	&Delta;t
         <mat-form-field>
           <mat-label> assign 	&Delta;t value </mat-label>
-          <input type="number" matInput [(ngModel)]="delta_t">
+          <input type="number" matInput [(ngModel)]="delta_t" required>
         </mat-form-field>
       </h3>
     </div>
@@ -37,7 +37,7 @@
     <h3> Choose a CCPP file
       <mat-form-field>
         <mat-label> Select CCPP File </mat-label>
-        <mat-select [(ngModel)]="physics">
+        <mat-select [(ngModel)]="physics" required>
             <mat-option value="RAMS.xml"> RAMS.xml </mat-option>
             <mat-option value="FV3GFS.xml"> FV3GFS.xml </mat-option>
         </mat-select>

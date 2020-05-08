@@ -19,11 +19,9 @@ function exportLevels(set){
         if(JSON.stringify(set[i]["recordType"]) == JSON.stringify("pressure")){
             temp += "\n - pressures: " + JSON.stringify(set[i]["pressures"])
         }
-        if(JSON.stringify(set[i]["recordType"]) == JSON.stringify("height")){
-            temp += "\n - start: " + JSON.stringify(set[i]["start"])
-            temp += "\n - step: "  + JSON.stringify(set[i]["step"])
-            temp += "\n - last: "  + JSON.stringify(set[i]["last"])
-        }
+        temp += "\n - start: " + JSON.stringify(set[i]["start"])
+        temp += "\n - step: "  + JSON.stringify(set[i]["step"])
+        temp += "\n - last: "  + JSON.stringify(set[i]["last"])
         test += temp + "\n \n";
     }
     for(var i = 0; i < test.length; i++){
@@ -103,30 +101,69 @@ function exportOutput(setNames){
         temp += "] \n - var_set: "    + JSON.stringify(setNames[i]["variableSet"]["setName"])
         temp += "\n - level_set: ["   + JSON.stringify(setNames[i]["levelSet"]["setName"]) + "] \n \n"
         test += temp;
-        }
-        for(var i = 0; i < test.length; i++){
-            if(test[i] == '"'){
-                test = test.substring(0,i) + "" + test.substring(i+1);
-            }
-        }
-        return test;
     }
+    for(var i = 0; i < test.length; i++){
+        if(test[i] == '"'){
+            test = test.substring(0,i) + "" + test.substring(i+1);
+        }
+    }
+    return test;
+}
 
-function exportFilej(sets, levelSets, variableSets, gridSets, timeSets){
+function exportNamelist(nelxy, nelz, nop, deltat){
+    var test = "";
+    var temp = "&my_namelist"
+    temp += "\n    nelxy = " + nelxy + ",";
+    temp += "\n    nelz = " + nelz + ",";
+    temp += "\n    nop = " + nop + ",";
+    temp += "\n    dt = " + deltat + ",";
+    temp += "\n&end";
+    test += temp;
+    return test;
+}
+
+function exportPhysics(physics) {
+    var test = "";
+    var temp = physics;
+    test += temp;
+    return test;
+}
+
+function exportFilej(sets, levelSets, variableSets, gridSets, timeSets, nelxy, nelz, nop, deltat, physics){
     //alert(JSON.stringify(setNames[0]["levelSet"]["setName"]))
     var leveldata = exportLevels(levelSets);
     var timeData =  exportTime(timeSets);
     var gridData =  exportGrid(gridSets);
-    var variableData =  exportVars(variableSets)
+    var variableData =  exportVars(variableSets);
     var output = exportOutput(sets);
     var test = leveldata + timeData + gridData + variableData + output;
     //alert(test);
-    
-    const originalData = test;
-    var a = document.createElement("a");
-    a.href = URL.createObjectURL(new Blob([originalData], {type:"text/plain"}));
-    a.setAttribute("download","data.txt");
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+
+    var namelistFile = exportNamelist(nelxy, nelz, nop, deltat);
+    var physicsFile = exportPhysics(physics);
+
+    var files = [test, namelistFile, physicsFile];
+    downloadFile(files);
+}
+
+function downloadFile(files) {
+    var i;
+    for (i = 0; i < files.length; i++) {
+        var a = document.createElement("a");
+        a.href = URL.createObjectURL(new Blob([files[i]], {type:"text/plain"}));
+        switch (i) {
+            case 0:
+                a.setAttribute("download","data.txt");
+                break;
+            case 1:
+                a.setAttribute("download","domain.nml");
+                break;
+            case 2:
+                a.setAttribute("download","physics.txt");
+                break;
+        }
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
 }
