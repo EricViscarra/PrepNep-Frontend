@@ -1,16 +1,6 @@
-// function exportFiletest(){
-//     alert("hello")
-//     const originalData = "toast";
-//     var a = document.createElement("a");
-//     a.href = URL.createObjectURL(new Blob([JSON.stringify(originalData,null,2)], {type:"text/plain"}));
-//     a.setAttribute("download","data.txt");
-//     document.body.appendChild(a);
-//     a.click();
-//     document.body.removeChild(a);
-// }
-
+//export file
+//function pertaining to level sets
 function exportLevels(set){
-    //alert(JSON.stringify(set[2]))
     var test = "";
     for(var i = 0; i < set.length; i++){
         var temp = JSON.stringify(set[i]["setName"])
@@ -34,7 +24,7 @@ function exportLevels(set){
     }
     return test;
 }
-
+//for time sets
 function exportTime(set){
     var test = ""
     for(var i = 0; i < set.length; i++){
@@ -54,7 +44,7 @@ function exportTime(set){
     }
     return test;
 }
-
+//for grid set
 function exportGrid(set){
     var test = ""
     for(var i = 0; i < set.length; i++){
@@ -71,7 +61,7 @@ function exportGrid(set){
     }
     return test;
 }
-
+//for var sets
 function exportVars(set){
     var test = ""
     for(var i = 0; i < set.length; i++){
@@ -90,7 +80,7 @@ function exportVars(set){
     }
     return test;
 }
-
+//for output sets
 function exportOutput(setNames){
     var test = "";
     for(var i = 0; i < setNames.length; i++){
@@ -109,7 +99,7 @@ function exportOutput(setNames){
     }
     return test;
 }
-
+//name list
 function exportNamelist(nelxy, nelz, nop, deltat){
     var test = "";
     var temp = "&my_namelist"
@@ -130,14 +120,12 @@ function exportPhysics(physics) {
 }
 
 function exportFilej(sets, levelSets, variableSets, gridSets, timeSets, nelxy, nelz, nop, deltat, physics){
-    //alert(JSON.stringify(setNames[0]["levelSet"]["setName"]))
     var leveldata = exportLevels(levelSets);
     var timeData =  exportTime(timeSets);
     var gridData =  exportGrid(gridSets);
     var variableData =  exportVars(variableSets);
     var output = exportOutput(sets);
     var test = leveldata + timeData + gridData + variableData + output;
-    //alert(test);
 
     var namelistFile = exportNamelist(nelxy, nelz, nop, deltat);
     var physicsFile = exportPhysics(physics);
