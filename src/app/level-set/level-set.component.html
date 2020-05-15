@@ -19,18 +19,6 @@
 
     <br/>
 
-    <!--
-    <mat-form-field>
-        <mat-label> Select Interval Type </mat-label>
-        <mat-select [(ngModel)]="levelSet.intervalType" required>
-            <mat-option value="points" *ngIf="levelSet.recordType == 'pressure'"> Points </mat-option>
-            <mat-option value="rule" *ngIf="levelSet.recordType == 'height'"> Rule </mat-option>
-        </mat-select>
-    </mat-form-field>
-
-    <br/>
-    -->
-
     <ng-template [ngIf]="levelSet.recordType == 'pressure' || levelSet.recordType == 'height'">
         <mat-form-field>
             <mat-label> Enter Start Value </mat-label>

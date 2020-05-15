@@ -15,7 +15,8 @@ import {
   MatSelectModule,
   MatToolbarModule,
   MatInputModule,
-  MatIconModule
+  MatIconModule,
+  MatTableModule
 } from '@angular/material';
 import { LevelSetComponent } from './level-set/level-set.component'
 import { VariableSetComponent } from './variable-set/variable-set.component';
@@ -60,7 +61,8 @@ import { ConfirmationComponent } from './confirmation/confirmation.component';
     MatSelectModule,
     MatToolbarModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    MatTableModule
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill'} },
