@@ -43,7 +43,7 @@ export class LevelSetComponent implements OnInit {
   }
 
   onSubmit() {
-    // Typescript converts 0 values to false on truth checks, hence the addition of == 0 checks
+    // Typescript converts 0 values to false on truth checks, hence the addition of  "|| x == 0" checks
     var valid = (this.levelSet.setName &&
       (this.levelSet.start || this.levelSet.start == 0) && 
       (this.levelSet.step || this.levelSet.step == 0) && 
